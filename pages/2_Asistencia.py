@@ -109,9 +109,9 @@ div[class*="deployButton"] {
     position: fixed !important;
     right: 0 !important;
     bottom: 0 !important;
-    width: 240px !important;
-    height: 80px !important;
-    background: #ffffff !important;
+    width: 135px !important;
+    height: 52px !important;
+    background: #0e1117 !important;
     z-index: 2147483647 !important;
     pointer-events: auto !important;
 }
