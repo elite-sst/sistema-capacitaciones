@@ -547,7 +547,7 @@ if st.button("Enviar asistencia", use_container_width=True):
                         "autoriza_datos": autoriza_datos
                     }
                 )
-
+                conn.commit()
             st.success(
                 "✅ Asistencia registrada correctamente."
             )
