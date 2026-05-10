@@ -8,47 +8,100 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("📋 Registro de Asistencia")
 st.markdown("""
 <style>
-/* Ocultar menú superior Streamlit */
-#MainMenu {
-    visibility: hidden;
+/* Ocultar sidebar */
+section[data-testid="stSidebar"] {
+    display: none !important;
 }
 
-/* Ocultar footer */
-footer {
-    visibility: hidden;
+/* Expandir contenido al ocultar sidebar */
+section.main > div {
+    padding-left: 0 !important;
 }
 
-/* Ocultar botón Deploy / Streamlit */
+/* Ocultar menú, header, toolbar y footer Streamlit */
+#MainMenu,
+footer,
+header,
+[data-testid="stHeader"],
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stStatusWidget"],
 .stDeployButton {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
 }
 
-/* Ocultar toolbar superior */
-[data-testid="stToolbar"] {
+/* Ocultar badges flotantes de Streamlit Cloud */
+a[href*="streamlit.io"],
+a[href*="github.com"],
+div[class*="viewerBadge"],
+div[class*="stToolbar"],
+div[class*="stDecoration"],
+div[class*="statusWidget"],
+div[class*="deployButton"] {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
-/* Ocultar header visual */
-[data-testid="stHeader"] {
-    display: none !important;
-}
-
-/* Mejorar espacio superior */
+/* Contenedor principal */
 .block-container {
-    padding-top: 1.2rem;
+    max-width: 680px !important;
+    padding-top: 2rem !important;
+    padding-left: 1.2rem !important;
+    padding-right: 1.2rem !important;
+    margin: auto !important;
 }
 
-/* Título de formación en una sola línea cuando sea posible */
+/* Títulos centrados */
+.titulo-principal {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    color: #1e293b;
+}
+
 .titulo-formacion {
-    font-size: 24px;
+    text-align: center;
+    font-size: 25px;
     font-weight: 800;
     line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    margin-bottom: 8px;
+    color: #1e293b;
+}
+
+.info-formacion {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+/* Celular */
+@media (max-width: 600px) {
+    .block-container {
+        max-width: 100% !important;
+        padding-top: 1.5rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    .titulo-principal {
+        font-size: 27px !important;
+    }
+
+    .titulo-formacion {
+        font-size: 22px !important;
+    }
+
+    .info-formacion {
+        font-size: 14px !important;
+    }
 }
 </style>
 """, unsafe_allow_html=True)
@@ -101,17 +154,25 @@ nombre_formacion = formacion[1]
 fecha_asistencia = formacion[2]
 formador = formacion[3]
 
-# =========================================
-# 🖥️ MOSTRAR INFORMACIÓN
-# =========================================
+st.markdown(
+    '<div class="titulo-principal">📋 Registro de Asistencia</div>',
+    unsafe_allow_html=True
+)
 
 st.markdown(
     f'<div class="titulo-formacion">📚 {nombre_formacion}</div>',
     unsafe_allow_html=True
 )
 
-st.write(f"📅 Fecha: **{fecha_asistencia}**")
-st.write(f"👨‍🏫 Formador: **{formador}**")
+st.markdown(
+    f'<div class="info-formacion">📅 Fecha: <b>{fecha_asistencia}</b></div>',
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    f'<div class="info-formacion">👨‍🏫 Formador: <b>{formador}</b></div>',
+    unsafe_allow_html=True
+)
 
 st.divider()
 
