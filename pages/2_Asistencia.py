@@ -74,10 +74,6 @@ div[style*="position: fixed"] {
     pointer-events: none !important;
 }
 
-a {
-    pointer-events: none !important;
-}
-
 /* BOTONES DEL FORMULARIO */
 
 button,
@@ -233,7 +229,50 @@ button,
         margin-bottom: 60px !important;
     }
 }
+/* =========================================================
+   🔥 BLOQUEAR TODOS LOS OVERLAYS INFERIORES
+========================================================= */
 
+iframe,
+iframe * {
+    pointer-events: none !important;
+}
+
+/* TODOS LOS ELEMENTOS FIJOS INFERIORES */
+
+div[style*="bottom"],
+div[style*="position: fixed"],
+div[style*="position:fixed"] {
+
+    pointer-events: none !important;
+}
+
+/* BADGES STREAMLIT */
+
+[data-testid="stDecoration"] {
+    pointer-events: none !important;
+}
+
+/* TODOS LOS LINKS */
+
+a,
+a * {
+    pointer-events: none !important;
+}
+
+/* PERMITIR SOLO FORMULARIOS */
+
+input,
+textarea,
+select,
+button,
+label,
+.stButton button,
+[data-baseweb="radio"],
+[data-baseweb="input"] {
+
+    pointer-events: auto !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
