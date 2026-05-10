@@ -10,17 +10,7 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-/* Ocultar sidebar */
-section[data-testid="stSidebar"] {
-    display: none !important;
-}
-
-/* Expandir contenido al ocultar sidebar */
-section.main > div {
-    padding-left: 0 !important;
-}
-
-/* Ocultar menú, header, toolbar y footer Streamlit */
+/* Ocultar elementos nativos */
 #MainMenu,
 footer,
 header,
@@ -34,21 +24,26 @@ header,
     height: 0 !important;
 }
 
-/* Ocultar badges flotantes de Streamlit Cloud */
+/* Ocultar sidebar */
+section[data-testid="stSidebar"] {
+    display: none !important;
+}
+
+/* Ocultar badges por selector */
 a[href*="streamlit.io"],
 a[href*="github.com"],
 div[class*="viewerBadge"],
-div[class*="stToolbar"],
-div[class*="stDecoration"],
 div[class*="statusWidget"],
-div[class*="deployButton"] {
+div[class*="deployButton"],
+div[class*="stToolbar"],
+div[class*="stDecoration"] {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
 }
 
-/* Contenedor principal */
+/* Contenedor */
 .block-container {
     max-width: 680px !important;
     padding-top: 2rem !important;
@@ -57,7 +52,7 @@ div[class*="deployButton"] {
     margin: auto !important;
 }
 
-/* Títulos centrados */
+/* Títulos PC */
 .titulo-principal {
     text-align: center;
     font-size: 27px;
@@ -80,52 +75,54 @@ div[class*="deployButton"] {
     text-align: center;
     font-size: 14px;
     margin-bottom: 8px;
-    color: #1e293b !important;       
+    color: #1e293b !important;
 }
 
-/* Celular */
-@media (max-width: 600px) {
-    .titulo-principal,
-    .titulo-formacion,
-    .info-formacion {
-        color: #ffffff !important;
-    }
-}
-
-    .titulo-principal {
-        font-size: 27px !important;
-    }
-
-    .titulo-formacion {
-        font-size: 22px !important;
-    }
-
-    .info-formacion {
-        font-size: 14px !important;
-    }
-}
-
+/* Trampa visual para tapar badges */
 .badge-cover {
     position: fixed !important;
     right: 0 !important;
     bottom: 0 !important;
-    width: 135px !important;
-    height: 52px !important;
-    background: #0e1117 !important;
+    width: 240px !important;
+    height: 80px !important;
+    background: #ffffff !important;
     z-index: 2147483647 !important;
     pointer-events: auto !important;
 }
 
+/* Celular */
 @media (max-width: 600px) {
+    .block-container {
+        max-width: 100% !important;
+        padding-top: 1.5rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    .titulo-principal {
+        font-size: 27px !important;
+        color: #ffffff !important;
+    }
+
+    .titulo-formacion {
+        font-size: 22px !important;
+        color: #ffffff !important;
+    }
+
+    .info-formacion {
+        font-size: 14px !important;
+        color: #ffffff !important;
+    }
+
     .badge-cover {
-        width: 150px !important;
+        width: 135px !important;
         height: 55px !important;
         background: #0e1117 !important;
     }
 }
-                                  
 </style>
 """, unsafe_allow_html=True)
+
 st.markdown('<div class="badge-cover"></div>', unsafe_allow_html=True) 
 # =========================================
 # 🔗 OBTENER ID FORMACIÓN DESDE URL
