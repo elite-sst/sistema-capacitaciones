@@ -63,6 +63,29 @@ div[class*="stDecoration"] {
 }
 
 /* =========================================================
+   🔥 BLOQUEAR INTERACCIÓN BADGES
+========================================================= */
+
+iframe {
+    pointer-events: none !important;
+}
+
+div[style*="position: fixed"] {
+    pointer-events: none !important;
+}
+
+a {
+    pointer-events: none !important;
+}
+
+/* BOTONES DEL FORMULARIO */
+
+button,
+.stButton button {
+    pointer-events: auto !important;
+}
+
+/* =========================================================
    CONTENEDOR PRINCIPAL
 ========================================================= */
 
@@ -146,7 +169,7 @@ div[class*="stDecoration"] {
     position: fixed !important;
 
     left: 0 !important;
-    bottom: 0 !important;
+    bottom: -8px !important;
 
     width: 100vw !important;
     height: 90px !important;
@@ -200,7 +223,7 @@ div[class*="stDecoration"] {
 
         width: 100vw !important;
 
-        height: 110px !important;
+        height: 130px !important;
 
         background: #0e1117 !important;
     }
