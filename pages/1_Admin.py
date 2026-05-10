@@ -140,7 +140,7 @@ with tab_formacion:
                     )
                     id_formacion = resultado.fetchone()[0]
 
-                url = f"https://app-capacitaciones.streamlit.app/Asistencia?formacion={id_formacion}"
+                url = f"https://elite-sst.streamlit.app/Asistencia?formacion={id_formacion}"
 
                 st.success("✅ Formación creada correctamente")
                 st.info(f"🔗 URL formación:\n\n{url}")
