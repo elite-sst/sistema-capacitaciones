@@ -1,0 +1,555 @@
+html,
+body,
+[class*="css"] {
+
+    font-family:
+    "Inter",
+    sans-serif;
+}
+
+/* =========================================================
+APP
+========================================================= */
+
+.stApp {
+
+    background:
+    #f1f5f9;
+}
+
+/* =========================================================
+OCULTAR STREAMLIT
+========================================================= */
+
+#MainMenu{
+    visibility:hidden;
+}
+
+footer{
+    visibility:hidden;
+}
+
+/* =========================================================
+HEADER STREAMLIT
+========================================================= */
+
+header {
+
+    background:
+    transparent !important;
+}
+
+/* =========================================================
+SIDEBAR ERP
+========================================================= */
+
+section[data-testid="stSidebar"] {
+
+    background:
+    #f8fafc;
+
+    border-right:
+    1px solid #dbe4ee;
+
+    width: 250px !important;
+
+    min-width: 250px !important;
+}
+
+/* =========================================================
+CONTENEDOR SIDEBAR
+========================================================= */
+
+section[data-testid="stSidebar"] > div {
+
+    padding-top: 0rem;
+
+    position: relative;
+}
+
+/* =========================================================
+LOGO WRAPPER
+========================================================= */
+
+.sidebar-logo-wrapper {
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding-top:55px;
+
+    padding-bottom:18px;
+}
+
+/* =========================================================
+LOGO
+========================================================= */
+
+.sidebar-logo-wrapper img {
+
+    width:160px !important;
+
+    margin-bottom:12px;
+}
+
+/* =========================================================
+EMPRESA
+========================================================= */
+
+.sidebar-company {
+
+    text-align:center;
+
+    font-size:28px;
+
+    font-weight:800;
+
+    color:#0f172a;
+
+    line-height:1.1;
+}
+
+/* =========================================================
+SUBTITLE
+========================================================= */
+
+.sidebar-subtitle {
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:13px;
+
+    margin-top:6px;
+
+    margin-bottom:20px;
+}
+
+/* =========================================================
+DIVIDER
+========================================================= */
+
+.sidebar-divider {
+
+    height:1px;
+
+    background:#dbe4ee;
+
+    margin-top:8px;
+
+    margin-bottom:18px;
+
+    width:100%;
+}
+
+/* =========================================================
+SECTION TITLE
+========================================================= */
+
+.sidebar-section-title {
+
+    font-size:13px;
+
+    font-weight:800;
+
+    color:#64748b;
+
+    letter-spacing:1px;
+
+    margin-bottom:14px;
+}
+
+/* =========================================================
+OCULTAR NAV AUTOMÁTICO STREAMLIT
+========================================================= */
+
+[data-testid="stSidebarNav"] {
+
+    display:none !important;
+}
+
+/* =========================================================
+PAGE LINK WRAPPER
+========================================================= */
+
+[data-testid="stPageLink"] {
+
+    margin-bottom:10px;
+}
+
+/* =========================================================
+BOTONES ERP
+========================================================= */
+
+[data-testid="stPageLink"] a {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 14px;
+
+    border-radius:14px;
+
+    text-decoration:none !important;
+
+    background:white;
+
+    color:#334155 !important;
+
+    border:1px solid #e2e8f0;
+
+    transition:0.2s ease;
+
+    font-weight:600;
+
+    font-size:14px;
+}
+
+/* =========================================================
+HOVER ERP
+========================================================= */
+
+[data-testid="stPageLink"] a:hover {
+
+    background:#ecfdf5;
+
+    color:#166534 !important;
+
+    transform:translateX(2px);
+}
+
+/* =========================================================
+ITEM ACTIVO ERP
+========================================================= */
+
+[data-testid="stPageLink"] a[aria-current="page"] {
+
+    background:
+    linear-gradient(
+        90deg,
+        #16a34a,
+        #22c55e
+    );
+
+    color:white !important;
+
+    border:none;
+
+    box-shadow:
+    0 8px 18px rgba(34,197,94,0.28);
+}
+
+/* =========================================================
+FOOTER SIDEBAR
+========================================================= */
+
+.sidebar-footer {
+
+    position:fixed;
+
+    bottom:18px;
+
+    left:20px;
+
+    font-size:12px;
+
+    color:#64748b;
+}
+
+/* =========================================================
+CONTENT
+========================================================= */
+
+.block-container {
+
+    padding-top:2rem;
+
+    padding-left:2.5rem;
+
+    padding-right:2.5rem;
+
+    max-width:100%;
+}
+
+/* =========================================================
+HEADER ERP
+========================================================= */
+
+.banner {
+
+    background:
+        radial-gradient(
+            600px 260px at 120px 40px,
+            rgba(255,255,255,.08),
+            transparent
+        ),
+        linear-gradient(
+            90deg,
+            #166534 0%,
+            #15803d 50%,
+            #14532d 100%
+        );
+
+    border-radius:26px;
+
+    padding:30px 38px;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.12);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    min-height:120px;
+
+    margin-bottom:2rem;
+}
+
+/* =========================================================
+HEADER TITLE
+========================================================= */
+
+.banner-title {
+
+    color:#ffffff;
+
+    font-weight:900;
+
+    font-size:40px;
+}
+
+/* =========================================================
+HEADER SUBTITLE
+========================================================= */
+
+.banner-sub {
+
+    color:#dcfce7;
+
+    font-size:15px;
+
+    margin-top:8px;
+}
+
+/* =========================================================
+BADGE
+========================================================= */
+
+.banner-badge {
+
+    background:
+        rgba(255,255,255,0.12);
+
+    padding:12px 18px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    color:#ecfdf5;
+
+    border:
+        1px solid rgba(255,255,255,0.2);
+}
+
+/* =========================================================
+KPI
+========================================================= */
+
+.kpi-box {
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:24px;
+
+    text-align:center;
+
+    border:
+    1px solid #e5e7eb;
+
+    box-shadow:
+    0 4px 12px rgba(0,0,0,0.04);
+
+    transition:0.2s ease;
+}
+
+.kpi-box:hover {
+
+    transform:
+    translateY(-4px);
+}
+
+/* =========================================================
+KPI NUMBER
+========================================================= */
+
+.kpi-number {
+
+    font-size:34px;
+
+    font-weight:800;
+
+    color:#166534;
+}
+
+/* =========================================================
+KPI TEXT
+========================================================= */
+
+.kpi-text {
+
+    margin-top:8px;
+
+    color:#64748b;
+
+    font-size:14px;
+}
+
+/* =========================================================
+MODULE BOX
+========================================================= */
+
+.module-box {
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:24px;
+
+    border:
+    1px solid #e5e7eb;
+
+    box-shadow:
+    0 4px 12px rgba(0,0,0,0.04);
+
+    margin-top:20px;
+
+    transition:0.2s ease;
+}
+
+.module-box:hover {
+
+    transform:
+    translateY(-4px);
+}
+
+/* =========================================================
+MODULE TITLE
+========================================================= */
+
+.module-title {
+
+    font-size:24px;
+
+    font-weight:800;
+
+    color:#166534;
+
+    margin-bottom:12px;
+}
+
+/* =========================================================
+MODULE DESCRIPTION
+========================================================= */
+
+.module-description {
+
+    color:#64748b;
+
+    line-height:1.7;
+}
+
+/* =========================================================
+BOTÓN SIDEBAR ERP
+========================================================= */
+
+[data-testid="collapsedControl"] {
+
+    position: fixed !important;
+
+    top: 12px !important;
+
+    left: 12px !important;
+
+    z-index: 999999 !important;
+
+    background:
+    rgba(255,255,255,0.95) !important;
+
+    border:
+    1px solid #dbe4ee !important;
+
+    border-radius: 10px !important;
+
+    width: 30px !important;
+
+    height: 30px !important;
+
+    box-shadow:
+    0 4px 10px rgba(0,0,0,0.08);
+
+    transition: 0.2s ease !important;
+}
+
+/* =========================================================
+HOVER BOTÓN
+========================================================= */
+
+[data-testid="collapsedControl"]:hover {
+
+    background:
+    #f8fafc !important;
+
+    transform:
+    scale(1.04);
+}
+
+/* =========================================================
+ICONO BOTÓN
+========================================================= */
+
+[data-testid="collapsedControl"] svg {
+
+    width:16px !important;
+
+    height:16px !important;
+
+    color:#475569 !important;
+}
+
+/* =========================================================
+RESPONSIVE
+========================================================= */
+
+@media(max-width:768px){
+
+    .banner{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:20px;
+    }
+
+    .banner-title{
+
+        font-size:30px;
+    }
+
+}

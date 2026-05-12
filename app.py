@@ -1,16 +1,73 @@
 import streamlit as st
-from utils.db import probar_conexion
+
+from ui.layout import load_css
+from ui.layout import render_sidebar
+
+from ui.components import render_hero
+from ui.components import render_kpis
+from ui.components import render_modules
+
+
+# =========================================================
+# CONFIGURACIÓN GENERAL
+# =========================================================
 
 st.set_page_config(
-    page_title="App Capacitaciones",
+
+    page_title="Sistema Capacitaciones",
+
     page_icon="📋",
-    layout="centered"
+
+    layout="wide",
+
+    initial_sidebar_state="expanded"
 )
 
-st.title("📋 Sistema de Capacitaciones")
 
-st.markdown("""
-Bienvenido al sistema de gestión de capacitaciones.
+# =========================================================
+# CARGAR ESTILOS
+# =========================================================
 
-Utiliza el menú lateral para navegar.
-""")
+load_css()
+
+
+# =========================================================
+# SIDEBAR
+# =========================================================
+
+render_sidebar()
+
+
+# =========================================================
+# HERO SECTION
+# =========================================================
+
+render_hero()
+
+
+# =========================================================
+# ESPACIADO
+# =========================================================
+
+st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
+
+
+# =========================================================
+# KPIS
+# =========================================================
+
+render_kpis()
+
+
+# =========================================================
+# ESPACIADO
+# =========================================================
+
+st.markdown("<div style='height:30px'></div>", unsafe_allow_html=True)
+
+
+# =========================================================
+# MÓDULOS
+# =========================================================
+
+render_modules()
