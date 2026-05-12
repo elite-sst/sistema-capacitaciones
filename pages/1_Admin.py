@@ -12,51 +12,429 @@ from openpyxl.styles import Font, Alignment
 from openpyxl.utils import get_column_letter
 
 
-# =========================
-# CONFIGURACIÓN INICIAL
-# =========================
-st.set_page_config(page_title="Panel Admin", layout="wide")
+# =========================================================
+# CONFIG
+# =========================================================
+
+st.set_page_config(
+    page_title="Panel Administrador",
+    page_icon="🔐",
+    layout="wide"
+)
+
+# =========================================================
+# CSS ERP PREMIUM
+# =========================================================
 
 st.markdown("""
 <style>
 
-/* Ocultar menú streamlit */
-#MainMenu {
-    visibility: hidden;
+/* =========================================================
+GLOBAL
+========================================================= */
+
+html,
+body,
+[class*="css"] {
+
+    font-family:
+    "Inter",
+    sans-serif;
 }
 
-/* Ocultar footer */
-footer {
-    visibility: hidden;
+/* =========================================================
+APP
+========================================================= */
+
+.stApp {
+
+    background:
+        linear-gradient(
+            180deg,
+            #f1f5f9 0%,
+            #e2e8f0 100%
+        );
 }
 
-/* Ocultar botón deploy */
-.stDeployButton {
-    display: none !important;
-}
+/* =========================================================
+OCULTAR STREAMLIT
+========================================================= */
 
-/* Ocultar toolbar */
+#MainMenu,
+footer,
+.stDeployButton,
 [data-testid="stToolbar"] {
-    display: none !important;
+
+    visibility:hidden;
 }
 
-/* Espacio superior */
+/* =========================================================
+CONTENT
+========================================================= */
+
 .block-container {
-        padding-top: 3rem !important;
+
+    padding-top:2rem;
+    padding-left:2.5rem;
+    padding-right:2.5rem;
 }
+
+/* =========================================================
+SOLO HEADER ERP
+========================================================= */
+
+.header-erp {
+
+    background:
+        linear-gradient(
+            135deg,
+            #166534 0%,
+            #15803d 45%,
+            #14532d 100%
+        );
+
+    border-radius:30px;
+
+    padding:34px 42px;
+
+    min-height:120px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 20px 40px rgba(21,128,61,0.22);
+
+    margin-bottom:2.5rem;
+}
+
+/* =========================================================
+TITLE
+========================================================= */
+
+.banner-title {
+
+    color:#ffffff;
+
+    font-weight:900;
+
+    font-size:46px;
+
+    line-height:1.1;
+}
+
+/* =========================================================
+SUBTITLE
+========================================================= */
+
+.banner-sub {
+
+    color:#dcfce7;
+
+    font-size:16px;
+
+    margin-top:10px;
+}
+
+/* =========================================================
+BADGE
+========================================================= */
+
+.banner-badge {
+
+    background:
+        rgba(255,255,255,0.14);
+
+    padding:12px 22px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    color:#ecfdf5;
+
+    border:
+        1px solid rgba(255,255,255,0.18);
+
+    font-weight:700;
+}
+
+/* =========================================================
+LOGIN CARD
+========================================================= */
+
+.login-card {
+
+    width:100%;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.96),
+            rgba(248,250,252,0.98)
+        );
+
+    border-radius:32px;
+
+    padding:46px 40px 30px 40px;
+
+    border:
+        1px solid #e2e8f0;
+
+    box-shadow:
+        0 24px 40px rgba(15,23,42,0.08);
+
+    backdrop-filter:blur(18px);
+
+    text-align:center;
+
+    margin-top:20px;
+
+    margin-bottom:16px;
+}
+
+/* =========================================================
+ICON LOGIN
+========================================================= */
+
+.login-icon {
+
+    font-size:58px;
+
+    margin-bottom:18px;
+}
+
+/* =========================================================
+TITLE LOGIN
+========================================================= */
+
+.login-title {
+
+    font-size:42px;
+
+    font-weight:900;
+
+    color:#166534;
+
+    margin-bottom:10px;
+}
+
+/* =========================================================
+SUBTITLE LOGIN
+========================================================= */
+
+.login-subtitle {
+
+    color:#64748b;
+
+    font-size:16px;
+
+    margin-bottom:30px;
+}
+
+/* =========================================================
+INPUT
+========================================================= */
+
+.stTextInput input {
+
+    border-radius:18px !important;
+
+    border:
+        1px solid #dbe4ee !important;
+
+    padding:16px !important;
+
+    font-size:16px !important;
+
+    background:white !important;
+
+    box-shadow:
+        0 4px 10px rgba(0,0,0,0.03);
+
+    transition:0.2s ease;
+}
+
+/* =========================================================
+FOCUS INPUT
+========================================================= */
+
+.stTextInput input:focus {
+
+    border:
+        1px solid #22c55e !important;
+
+    box-shadow:
+        0 0 0 4px rgba(34,197,94,0.12) !important;
+}
+
+/* =========================================================
+BUTTONS
+========================================================= */
+
+.stButton button {
+
+    width:100%;
+
+    border:none !important;
+
+    border-radius:18px !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #22c55e
+        ) !important;
+
+    color:white !important;
+
+    font-weight:800 !important;
+
+    font-size:16px !important;
+
+    padding:14px 18px !important;
+
+    transition:0.25s ease !important;
+
+    box-shadow:
+        0 12px 24px rgba(34,197,94,0.18);
+}
+
+/* =========================================================
+HOVER BUTTON
+========================================================= */
+
+.stButton button:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 18px 30px rgba(34,197,94,0.28);
+}
+
+/* =========================================================
+TABS
+========================================================= */
+
+.stTabs [data-baseweb="tab-list"] {
+
+    gap:12px;
+}
+
+.stTabs [data-baseweb="tab"] {
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:12px 18px;
+
+    font-weight:700;
+
+    border:
+        1px solid #e2e8f0;
+}
+
+/* =========================================================
+DATAFRAME
+========================================================= */
+
+[data-testid="stDataFrame"] {
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    border:
+        1px solid #e2e8f0;
+}
+/* =========================================================
+LOGIN CONTAINER STREAMLIT
+========================================================= */
+
+[data-testid="stVerticalBlockBorderWrapper"] {
+
+    border-radius:30px !important;
+
+    border:
+        1px solid rgba(255,255,255,0.08) !important;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.96),
+            rgba(248,250,252,0.98)
+        ) !important;
+
+    padding:18px !important;
+
+    box-shadow:
+        0 24px 40px rgba(15,23,42,0.08) !important;
+}
+div[data-testid="stHorizontalBlock"]:has(.banner-title) {
+
+    background:
+        linear-gradient(
+            135deg,
+            #166534 0%,
+            #15803d 45%,
+            #14532d 100%
+        );
+
+    border-radius:30px;
+
+    padding:34px 42px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 20px 40px rgba(21,128,61,0.22);
+
+    margin-bottom:2.5rem;
+
+    ali            
 
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("""
-<h1 style="margin-top:10px; margin-bottom:25px;">
-🔐 Panel Administrador
-</h1>
-""", unsafe_allow_html=True)
+# =========================================================
+# HEADER ERP
+# =========================================================
 
-# =========================================
-# 🔐 CONTROL DE ACCESO ADMIN
-# =========================================
+header_col1, header_col2 = st.columns([5, 1])
+
+with header_col1:
+
+    st.markdown(
+        """
+        <div class="banner-title">
+            🔐 Panel Administrador
+        </div>
+
+        <div class="banner-sub">
+            Gestión corporativa Elite Ingenieros
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+with header_col2:
+
+    st.markdown(
+        """
+        <div class="banner-badge">
+            Sistema Seguro
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+# =========================================================
+# CONTROL LOGIN
+# =========================================================
 
 ADMIN_PASSWORD = st.secrets["ADMIN_PASSWORD"]
 
@@ -65,27 +443,46 @@ if "admin_autenticado" not in st.session_state:
 
 if not st.session_state.admin_autenticado:
 
-    password = st.text_input(
-        "Ingrese contraseña admin",
-        type="password"
-    )
+    col1, col2, col3 = st.columns([1, 1.3, 1])
 
-    if password:
+    with col2:
+      with st.container(border=True):      
+        st.markdown("## 🔐 Acceso Admin")
 
-        if password == ADMIN_PASSWORD:
+        st.caption(
+            "Ingrese credenciales corporativas"
+        )
 
-            st.session_state.admin_autenticado = True
-            st.rerun()
+        password = st.text_input(
+            "Contraseña",
+            type="password",
+            label_visibility="collapsed",
+            placeholder="Ingrese contraseña administrador"
+        )
 
-        else:
+        st.markdown("<br>", unsafe_allow_html=True)
 
-            st.error("❌ Contraseña incorrecta")
+        if st.button(
+            "Ingresar al Panel",
+            use_container_width=True
+        ):
 
-    else:
+            if password == ADMIN_PASSWORD:
 
-        st.warning("⚠️ Ingrese contraseña admin")
+                st.session_state.admin_autenticado = True
+                st.rerun()
+
+            else:
+
+                st.error(
+                    "❌ Contraseña incorrecta"
+                )
 
     st.stop()
+
+# =========================================================
+# TABS
+# =========================================================
 
 tab_formacion, tab_empleados, tab_asistencias = st.tabs(
     [
@@ -95,29 +492,48 @@ tab_formacion, tab_empleados, tab_asistencias = st.tabs(
     ]
 )
 
+# =========================================================
+# TAB FORMACIÓN
+# =========================================================
 
-# =========================
-# TAB 1: CREAR FORMACIÓN
-# =========================
 with tab_formacion:
+
     st.subheader("📚 Crear Formación")
 
     col1, col2 = st.columns(2)
 
     with col1:
-        nombre_formacion = st.text_input("Nombre de la capacitación")
+        nombre_formacion = st.text_input(
+            "Nombre capacitación"
+        )
 
     with col2:
-        fecha = st.date_input("Fecha asistencia")
+        fecha = st.date_input(
+            "Fecha asistencia"
+        )
 
-    formador = st.text_input("Formador", value="Eduardo Florez")
+    formador = st.text_input(
+        "Formador",
+        value="Eduardo Florez"
+    )
 
-    if st.button("Crear formación", use_container_width=True):
+    if st.button(
+        "Crear formación",
+        use_container_width=True
+    ):
+
         if not nombre_formacion:
-            st.warning("⚠️ Debe ingresar el nombre de la capacitación")
+
+            st.warning(
+                "⚠️ Debe ingresar el nombre"
+            )
+
         else:
+
             try:
+
                 with engine.begin() as conn:
+
                     resultado = conn.execute(
                         text("""
                             INSERT INTO formaciones (
@@ -138,54 +554,75 @@ with tab_formacion:
                             "formador": formador.strip()
                         }
                     )
+
                     id_formacion = resultado.fetchone()[0]
 
                 url = f"https://elite-sst.streamlit.app/Asistencia?formacion={id_formacion}"
 
-                st.success("✅ Formación creada correctamente")
-                st.info(f"🔗 URL formación:\n\n{url}")
+                st.success(
+                    "✅ Formación creada correctamente"
+                )
+
+                st.code(url)
 
             except Exception as e:
-                st.error(f"❌ Error al crear formación: {e}")
 
+                st.error(
+                    f"❌ Error: {e}"
+                )
 
-# =========================
-# TAB 2: GESTIÓN EMPLEADOS
-# =========================
+# =========================================================
+# TAB EMPLEADOS
+# =========================================================
+
 with tab_empleados:
-    st.subheader("👥 Gestión de Empleados")
+
+    st.subheader("👥 Gestión Empleados")
 
     subtab_agregar, subtab_consultar = st.tabs(
         [
-            "➕ Agregar empleado",
-            "🔎 Consultar empleados"
+            "➕ Agregar",
+            "🔎 Consultar"
         ]
     )
 
     with subtab_agregar:
-        st.markdown("### ➕ Agregar empleado")
 
         col1, col2 = st.columns(2)
 
         with col1:
-            cedula_emp = st.text_input("Cédula empleado")
-            nombre_emp = st.text_input("Nombre completo")
+            cedula_emp = st.text_input("Cédula")
+            nombre_emp = st.text_input("Nombre")
 
         with col2:
             cargo_emp = st.text_input("Cargo")
-            zona_emp = st.text_input("Zona", value="Metropolitano")
+            zona_emp = st.text_input(
+                "Zona",
+                value="Metropolitano"
+            )
 
         proyecto_emp = st.text_input(
             "Proyecto",
             value="CONEXIÓN Y VINCULACIÓN METROPOLITANO"
         )
 
-        if st.button("Guardar empleado", use_container_width=True):
+        if st.button(
+            "Guardar empleado",
+            use_container_width=True
+        ):
+
             if not cedula_emp or not nombre_emp or not cargo_emp:
-                st.warning("⚠️ Cédula, nombre y cargo son obligatorios.")
+
+                st.warning(
+                    "⚠️ Campos obligatorios"
+                )
+
             else:
+
                 try:
+
                     with engine.begin() as conn:
+
                         conn.execute(
                             text("""
                                 INSERT INTO empleados (
@@ -214,20 +651,24 @@ with tab_empleados:
                             }
                         )
 
-                    st.success("✅ Empleado guardado correctamente.")
+                    st.success(
+                        "✅ Empleado guardado"
+                    )
 
                 except Exception as e:
-                    if "duplicate" in str(e).lower() or "unique" in str(e).lower():
-                        st.warning("⚠️ Esta cédula ya existe.")
-                    else:
-                        st.error(f"❌ Error al guardar empleado: {e}")
+
+                    st.error(
+                        f"❌ Error: {e}"
+                    )
 
     with subtab_consultar:
-        st.markdown("### 🔎 Consultar empleados")
 
-        buscar = st.text_input("Buscar por cédula, nombre, cargo, proyecto o zona")
+        buscar = st.text_input(
+            "Buscar empleado"
+        )
 
         with engine.begin() as conn:
+
             df_empleados = pd.read_sql(
                 text("""
                     SELECT
@@ -244,8 +685,6 @@ with tab_empleados:
                         OR cedula ILIKE :patron
                         OR nombre_completo ILIKE :patron
                         OR cargo ILIKE :patron
-                        OR proyecto ILIKE :patron
-                        OR zona ILIKE :patron
                     ORDER BY nombre_completo
                 """),
                 conn,
@@ -255,147 +694,70 @@ with tab_empleados:
                 }
             )
 
-        if df_empleados.empty:
-            st.info("ℹ️ No hay empleados para mostrar.")
-        else:
-            st.success(f"✅ Total empleados encontrados: {len(df_empleados)}")
-            st.dataframe(df_empleados, use_container_width=True)
+        st.dataframe(
+            df_empleados,
+            use_container_width=True
+        )
 
+# =========================================================
+# TAB ASISTENCIAS
+# =========================================================
 
-# =========================
-# TAB 3: ASISTENCIAS Y REPORTES
-# =========================
 with tab_asistencias:
-    st.subheader("📋 Consultar Asistencias y Descargar Reporte")
+
+    st.subheader(
+        "📋 Reportes Asistencia"
+    )
 
     with engine.begin() as conn:
+
         df_formaciones = pd.read_sql(
             text("""
-                SELECT id, nombre_formacion, fecha_asistencia, formador
+                SELECT
+                    id,
+                    nombre_formacion,
+                    fecha_asistencia
                 FROM formaciones
                 ORDER BY id DESC
             """),
             conn
         )
 
-    if df_formaciones.empty:
-        st.info("ℹ️ No hay formaciones creadas todavía")
-        st.stop()
-
     opciones = {
-        f"{row.id} - {row.nombre_formacion} - {row.fecha_asistencia}": row.id
+        f"{row.id} - {row.nombre_formacion}": row.id
         for row in df_formaciones.itertuples()
     }
 
-    seleccion = st.selectbox("Seleccione una formación", list(opciones.keys()))
+    seleccion = st.selectbox(
+        "Seleccione formación",
+        list(opciones.keys())
+    )
+
     id_seleccionado = opciones[seleccion]
 
     with engine.begin() as conn:
+
         df_asistencias = pd.read_sql(
             text("""
                 SELECT
-                    f.nombre_formacion,
-                    f.fecha_asistencia,
                     a.cedula,
                     a.nombre_completo,
                     a.cargo,
                     a.proyecto,
                     a.zona,
                     a.formador,
-                    a.clasificacion_formacion,
-                    a.tipo_formacion,
-                    a.autoriza_datos,
                     a.fecha_registro
                 FROM asistencias a
-                INNER JOIN formaciones f
-                    ON a.id_formacion = f.id
                 WHERE a.id_formacion = :id_formacion
                 ORDER BY a.fecha_registro DESC
             """),
             conn,
-            params={"id_formacion": id_seleccionado}
+            params={
+                "id_formacion": id_seleccionado
+            }
         )
 
-    if df_asistencias.empty:
-        st.info("ℹ️ Esta formación aún no tiene asistencias registradas")
-    else:
-        st.success(f"✅ Total asistentes: {len(df_asistencias)}")
-
-        st.dataframe(
-            df_asistencias,
-            use_container_width=True
-        )
-
-        buffer = BytesIO()
-
-        with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
-            df_asistencias.to_excel(
-                writer,
-                index=False,
-                sheet_name="Asistencias"
-            )
-
-        buffer.seek(0)
-
-        wb = load_workbook(buffer)
-        ws = wb["Asistencias"]
-
-        # Congelar fila de encabezados
-        ws.freeze_panes = "A2"
-
-        # Crear tabla estructurada
-        ultima_fila = ws.max_row
-        ultima_columna = ws.max_column
-        rango_tabla = f"A1:{get_column_letter(ultima_columna)}{ultima_fila}"
-
-        tabla = Table(
-            displayName="TablaAsistencias",
-            ref=rango_tabla
-        )
-
-        estilo = TableStyleInfo(
-            name="TableStyleMedium2",
-            showFirstColumn=False,
-            showLastColumn=False,
-            showRowStripes=True,
-            showColumnStripes=False
-        )
-
-        tabla.tableStyleInfo = estilo
-        ws.add_table(tabla)
-
-        # Formato encabezados
-        for cell in ws[1]:
-            cell.font = Font(bold=True, color="FFFFFF")
-            cell.alignment = Alignment(horizontal="center", vertical="center")
-
-        # Alinear celdas
-        for row in ws.iter_rows():
-            for cell in row:
-                cell.alignment = Alignment(vertical="center")
-
-        # Autoajustar columnas
-        for columna in ws.columns:
-            max_length = 0
-            letra_columna = get_column_letter(columna[0].column)
-
-            for cell in columna:
-                if cell.value:
-                    max_length = max(max_length, len(str(cell.value)))
-
-            ws.column_dimensions[letra_columna].width = max_length + 3
-
-        # Alto encabezado
-        ws.row_dimensions[1].height = 24
-
-        salida = BytesIO()
-        wb.save(salida)
-        salida.seek(0)
-
-        st.download_button(
-            label="📥 Descargar Excel",
-            data=salida,
-            file_name=f"asistencia_formacion_{id_seleccionado}.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            use_container_width=True
-        )
+    st.dataframe(
+        df_asistencias,
+        use_container_width=True
+    )
