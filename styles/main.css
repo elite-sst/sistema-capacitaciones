@@ -14,18 +14,20 @@ APP
 .stApp {
 
     background:
-    #f1f5f9;
+        linear-gradient(
+            180deg,
+            #f1f5f9 0%,
+            #e2e8f0 100%
+        );
 }
 
 /* =========================================================
 OCULTAR STREAMLIT
 ========================================================= */
 
-#MainMenu{
-    visibility:hidden;
-}
+#MainMenu,
+footer {
 
-footer{
     visibility:hidden;
 }
 
@@ -40,20 +42,29 @@ header {
 }
 
 /* =========================================================
-SIDEBAR ERP
+SIDEBAR ERP ULTRA
 ========================================================= */
 
 section[data-testid="stSidebar"] {
 
     background:
-    #f8fafc;
+        linear-gradient(
+            180deg,
+            #f8fafc 0%,
+            #eef2f7 100%
+        );
 
     border-right:
-    1px solid #dbe4ee;
+        1px solid #dbe4ee;
 
-    width: 250px !important;
+    width:300px !important;
 
-    min-width: 250px !important;
+    min-width:300px !important;
+
+    box-shadow:
+        8px 0 30px rgba(15,23,42,0.08);
+
+    backdrop-filter:blur(14px);
 }
 
 /* =========================================================
@@ -62,28 +73,45 @@ CONTENEDOR SIDEBAR
 
 section[data-testid="stSidebar"] > div {
 
-    padding-top: 0rem;
+    padding-top:0rem !important;
 
-    position: relative;
+    position:relative;
 }
 
 /* =========================================================
-LOGO WRAPPER
+LOGO SIDEBAR
 ========================================================= */
 
 .sidebar-logo-wrapper {
 
-    display:flex;
+    width:100%;
 
-    flex-direction:column;
+    display:flex;
 
     justify-content:center;
 
     align-items:center;
 
-    padding-top:55px;
+    padding-top:6px;
 
-    padding-bottom:18px;
+    padding-bottom:24px;
+
+    margin-bottom:10px;
+
+    position:relative;
+}
+
+/* =========================================================
+CONTENEDOR IMAGEN
+========================================================= */
+
+.sidebar-logo-wrapper [data-testid="stImage"] {
+
+    display:flex;
+
+    justify-content:center;
+
+    width:100%;
 }
 
 /* =========================================================
@@ -92,60 +120,33 @@ LOGO
 
 .sidebar-logo-wrapper img {
 
-    width:160px !important;
+    width:250px !important;
 
-    margin-bottom:12px;
+    height:auto !important;
+
+    object-fit:contain;
+
+    display:block;
+
+    margin:0 auto;
+
+    transition:all .25s ease;
+
+    filter:
+        drop-shadow(
+            0 12px 22px rgba(0,0,0,0.12)
+        );
 }
 
 /* =========================================================
-EMPRESA
+HOVER LOGO
 ========================================================= */
 
-.sidebar-company {
+.sidebar-logo-wrapper img:hover {
 
-    text-align:center;
-
-    font-size:28px;
-
-    font-weight:800;
-
-    color:#0f172a;
-
-    line-height:1.1;
-}
-
-/* =========================================================
-SUBTITLE
-========================================================= */
-
-.sidebar-subtitle {
-
-    text-align:center;
-
-    color:#64748b;
-
-    font-size:13px;
-
-    margin-top:6px;
-
-    margin-bottom:20px;
-}
-
-/* =========================================================
-DIVIDER
-========================================================= */
-
-.sidebar-divider {
-
-    height:1px;
-
-    background:#dbe4ee;
-
-    margin-top:8px;
-
-    margin-bottom:18px;
-
-    width:100%;
+    transform:
+        scale(1.04)
+        translateY(-2px);
 }
 
 /* =========================================================
@@ -154,19 +155,23 @@ SECTION TITLE
 
 .sidebar-section-title {
 
-    font-size:13px;
+    font-size:12px;
 
-    font-weight:800;
+    font-weight:900;
 
     color:#64748b;
 
-    letter-spacing:1px;
+    letter-spacing:1.5px;
 
-    margin-bottom:14px;
+    margin-top:6px;
+
+    margin-bottom:18px;
+
+    padding-left:4px;
 }
 
 /* =========================================================
-OCULTAR NAV AUTOMÁTICO STREAMLIT
+OCULTAR NAV STREAMLIT
 ========================================================= */
 
 [data-testid="stSidebarNav"] {
@@ -180,11 +185,11 @@ PAGE LINK WRAPPER
 
 [data-testid="stPageLink"] {
 
-    margin-bottom:10px;
+    margin-bottom:12px;
 }
 
 /* =========================================================
-BOTONES ERP
+BOTONES ERP PREMIUM
 ========================================================= */
 
 [data-testid="stPageLink"] a {
@@ -193,59 +198,124 @@ BOTONES ERP
 
     align-items:center;
 
-    gap:10px;
+    gap:12px;
 
-    padding:12px 14px;
+    padding:15px 18px;
 
-    border-radius:14px;
+    border-radius:18px;
 
     text-decoration:none !important;
 
-    background:white;
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #f8fafc 100%
+        );
 
     color:#334155 !important;
 
-    border:1px solid #e2e8f0;
+    border:
+        1px solid #e2e8f0;
 
-    transition:0.2s ease;
+    transition:all .25s ease;
 
-    font-weight:600;
+    font-weight:700;
 
-    font-size:14px;
+    font-size:15px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 6px 14px rgba(0,0,0,0.05);
 }
 
 /* =========================================================
-HOVER ERP
+BARRA VERDE
+========================================================= */
+
+[data-testid="stPageLink"] a::before {
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:5px;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #22c55e,
+            #16a34a
+        );
+
+    opacity:0;
+
+    transition:0.25s ease;
+}
+
+/* =========================================================
+HOVER BOTONES
 ========================================================= */
 
 [data-testid="stPageLink"] a:hover {
 
-    background:#ecfdf5;
+    transform:
+        translateX(6px)
+        scale(1.02);
+
+    background:
+        linear-gradient(
+            90deg,
+            #ecfdf5 0%,
+            #f0fdf4 100%
+        );
+
+    border:
+        1px solid #bbf7d0;
 
     color:#166534 !important;
 
-    transform:translateX(2px);
+    box-shadow:
+        0 14px 24px rgba(34,197,94,0.16);
 }
 
 /* =========================================================
-ITEM ACTIVO ERP
+ACTIVAR BARRA
+========================================================= */
+
+[data-testid="stPageLink"] a:hover::before {
+
+    opacity:1;
+}
+
+/* =========================================================
+BOTÓN ACTIVO
 ========================================================= */
 
 [data-testid="stPageLink"] a[aria-current="page"] {
 
     background:
-    linear-gradient(
-        90deg,
-        #16a34a,
-        #22c55e
-    );
+        linear-gradient(
+            135deg,
+            #16a34a 0%,
+            #22c55e 100%
+        );
 
     color:white !important;
 
     border:none;
 
     box-shadow:
-    0 8px 18px rgba(34,197,94,0.28);
+        0 14px 28px rgba(34,197,94,0.28);
 }
 
 /* =========================================================
@@ -281,30 +351,30 @@ CONTENT
 }
 
 /* =========================================================
-HEADER ERP
+HEADER ERP PREMIUM
 ========================================================= */
 
 .banner {
 
     background:
         radial-gradient(
-            600px 260px at 120px 40px,
-            rgba(255,255,255,.08),
-            transparent
+            circle at top left,
+            rgba(255,255,255,0.12),
+            transparent 35%
         ),
+
         linear-gradient(
-            90deg,
+            135deg,
             #166534 0%,
-            #15803d 50%,
+            #15803d 45%,
             #14532d 100%
         );
 
-    border-radius:26px;
+    border-radius:30px;
 
-    padding:30px 38px;
+    padding:36px 42px;
 
-    box-shadow:
-        0 12px 30px rgba(0,0,0,0.12);
+    min-height:145px;
 
     display:flex;
 
@@ -312,9 +382,17 @@ HEADER ERP
 
     justify-content:space-between;
 
-    min-height:120px;
+    position:relative;
 
-    margin-bottom:2rem;
+    overflow:hidden;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 20px 40px rgba(21,128,61,0.22);
+
+    margin-bottom:2.5rem;
 }
 
 /* =========================================================
@@ -327,7 +405,11 @@ HEADER TITLE
 
     font-weight:900;
 
-    font-size:40px;
+    font-size:48px;
+
+    line-height:1.1;
+
+    letter-spacing:-1px;
 }
 
 /* =========================================================
@@ -338,9 +420,11 @@ HEADER SUBTITLE
 
     color:#dcfce7;
 
-    font-size:15px;
+    font-size:16px;
 
-    margin-top:8px;
+    margin-top:10px;
+
+    font-weight:500;
 }
 
 /* =========================================================
@@ -350,9 +434,9 @@ BADGE
 .banner-badge {
 
     background:
-        rgba(255,255,255,0.12);
+        rgba(255,255,255,0.14);
 
-    padding:12px 18px;
+    padding:13px 22px;
 
     border-radius:999px;
 
@@ -361,36 +445,93 @@ BADGE
     color:#ecfdf5;
 
     border:
-        1px solid rgba(255,255,255,0.2);
+        1px solid rgba(255,255,255,0.18);
+
+    font-weight:700;
+
+    backdrop-filter:blur(8px);
 }
 
 /* =========================================================
-KPI
+KPI CARD ERP
 ========================================================= */
 
 .kpi-box {
 
-    background:white;
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #f8fafc 100%
+        );
 
-    border-radius:20px;
+    border-radius:24px;
 
-    padding:24px;
+    padding:32px 24px;
 
     text-align:center;
 
+    position:relative;
+
+    overflow:hidden;
+
     border:
-    1px solid #e5e7eb;
+        1px solid #e2e8f0;
+
+    transition:all .25s ease;
 
     box-shadow:
-    0 4px 12px rgba(0,0,0,0.04);
-
-    transition:0.2s ease;
+        0 10px 22px rgba(15,23,42,0.05);
 }
+
+/* =========================================================
+TOP BORDER KPI
+========================================================= */
+
+.kpi-box::before {
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #22c55e,
+            #16a34a
+        );
+}
+
+/* =========================================================
+HOVER KPI
+========================================================= */
 
 .kpi-box:hover {
 
     transform:
-    translateY(-4px);
+        translateY(-8px);
+
+    box-shadow:
+        0 18px 34px rgba(34,197,94,0.16);
+}
+
+/* =========================================================
+ICONO KPI
+========================================================= */
+
+.kpi-icon {
+
+    font-size:32px;
+
+    margin-bottom:14px;
 }
 
 /* =========================================================
@@ -399,11 +540,15 @@ KPI NUMBER
 
 .kpi-number {
 
-    font-size:34px;
+    font-size:48px;
 
-    font-weight:800;
+    font-weight:900;
 
     color:#166534;
+
+    line-height:1;
+
+    margin-bottom:10px;
 }
 
 /* =========================================================
@@ -412,11 +557,13 @@ KPI TEXT
 
 .kpi-text {
 
-    margin-top:8px;
-
     color:#64748b;
 
-    font-size:14px;
+    font-size:15px;
+
+    font-weight:600;
+
+    letter-spacing:0.3px;
 }
 
 /* =========================================================
@@ -425,27 +572,43 @@ MODULE BOX
 
 .module-box {
 
-    background:white;
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #f8fafc 100%
+        );
 
-    border-radius:20px;
+    border-radius:24px;
 
-    padding:24px;
+    padding:30px;
 
     border:
-    1px solid #e5e7eb;
+        1px solid #e2e8f0;
 
     box-shadow:
-    0 4px 12px rgba(0,0,0,0.04);
+        0 10px 20px rgba(15,23,42,0.05);
+
+    transition:all .25s ease;
+
+    position:relative;
+
+    overflow:hidden;
 
     margin-top:20px;
-
-    transition:0.2s ease;
 }
+
+/* =========================================================
+HOVER MODULE
+========================================================= */
 
 .module-box:hover {
 
     transform:
-    translateY(-4px);
+        translateY(-6px);
+
+    box-shadow:
+        0 18px 30px rgba(34,197,94,0.10);
 }
 
 /* =========================================================
@@ -454,13 +617,13 @@ MODULE TITLE
 
 .module-title {
 
-    font-size:24px;
+    font-size:28px;
 
-    font-weight:800;
+    font-weight:900;
 
     color:#166534;
 
-    margin-bottom:12px;
+    margin-bottom:14px;
 }
 
 /* =========================================================
@@ -471,39 +634,47 @@ MODULE DESCRIPTION
 
     color:#64748b;
 
-    line-height:1.7;
+    line-height:1.8;
+
+    font-size:15px;
 }
 
 /* =========================================================
-BOTÓN SIDEBAR ERP
+BOTÓN SIDEBAR
 ========================================================= */
 
 [data-testid="collapsedControl"] {
 
-    position: fixed !important;
+    position:fixed !important;
 
-    top: 12px !important;
+    top:14px !important;
 
-    left: 12px !important;
+    left:250px !important;
 
-    z-index: 999999 !important;
+    z-index:999999 !important;
 
     background:
-    rgba(255,255,255,0.95) !important;
+        rgba(255,255,255,0.96) !important;
 
     border:
-    1px solid #dbe4ee !important;
+        1px solid #dbe4ee !important;
 
-    border-radius: 10px !important;
+    border-radius:12px !important;
 
-    width: 30px !important;
+    width:34px !important;
 
-    height: 30px !important;
+    height:34px !important;
+
+    display:flex !important;
+
+    align-items:center !important;
+
+    justify-content:center !important;
 
     box-shadow:
-    0 4px 10px rgba(0,0,0,0.08);
+        0 8px 18px rgba(0,0,0,0.10);
 
-    transition: 0.2s ease !important;
+    transition:0.2s ease !important;
 }
 
 /* =========================================================
@@ -513,10 +684,10 @@ HOVER BOTÓN
 [data-testid="collapsedControl"]:hover {
 
     background:
-    #f8fafc !important;
+        #f8fafc !important;
 
     transform:
-    scale(1.04);
+        scale(1.06);
 }
 
 /* =========================================================
@@ -538,6 +709,13 @@ RESPONSIVE
 
 @media(max-width:768px){
 
+    section[data-testid="stSidebar"] {
+
+        width:100% !important;
+
+        min-width:100% !important;
+    }
+
     .banner{
 
         flex-direction:column;
@@ -545,11 +723,22 @@ RESPONSIVE
         align-items:flex-start;
 
         gap:20px;
+
+        padding:28px;
     }
 
     .banner-title{
 
-        font-size:30px;
+        font-size:34px;
     }
 
+    .kpi-number{
+
+        font-size:38px;
+    }
+
+    .sidebar-logo-wrapper img {
+
+        width:210px !important;
+    }
 }

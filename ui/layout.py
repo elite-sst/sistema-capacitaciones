@@ -25,10 +25,6 @@ def load_css():
             "No se encontró el archivo main.css"
         )
 
-
-# =========================================================
-# SIDEBAR CORPORATIVO
-# =========================================================
 # =========================================================
 # SIDEBAR ERP
 # =========================================================
@@ -56,7 +52,7 @@ def render_sidebar():
 
             st.image(
                 str(logo_path),
-                width=170
+                use_container_width=True
             )
         # =====================================================
         # EMPRESA
@@ -96,11 +92,6 @@ def render_sidebar():
         # MENU ERP
         # =====================================================
 
-        st.page_link(
-            "app.py",
-            label="Dashboard",
-            icon="📊"
-        )
 
         st.page_link(
             "pages/1_Admin.py",
