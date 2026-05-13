@@ -223,7 +223,7 @@ def render_admin():
 
                     url = (
                         f"https://elite-sst.streamlit.app/"
-                        f"?page=asistencia&formacion={id_formacion}"
+                        f"?view=asistencia&formacion={id_formacion}"
                     )
 
                     st.success(

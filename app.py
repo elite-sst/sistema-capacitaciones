@@ -1,13 +1,5 @@
 import streamlit as st
 
-from ui.layout import load_css
-from ui.layout import render_sidebar
-
-from ui.components import render_hero
-from ui.components import render_kpis
-from ui.components import render_modules
-
-from views.admin import render_admin
 from views.asistencia import render_asistencia
 
 
@@ -23,89 +15,107 @@ st.set_page_config(
 
     layout="wide",
 
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 
 # =========================================================
-# SESSION STATE ROUTER
+# QUERY PARAMS
 # =========================================================
 
-if "page" not in st.session_state:
+params = st.query_params
 
-    st.session_state.page = "home"
-
-
-# =========================================================
-# CARGAR CSS
-# =========================================================
-
-load_css()
-
+view_query = params.get("view", "")
 
 # =========================================================
-# SIDEBAR ERP
+# VALIDAR LISTA QUERY PARAMS
 # =========================================================
 
-render_sidebar()
+if isinstance(view_query, list):
+
+    view_query = view_query[0]
 
 
-# =========================================================
-# ROUTER PRINCIPAL
-# =========================================================
+# # =========================================================
+# # DEBUG
+# # =========================================================
 
-if st.session_state.page == "home":
-
-    # =====================================================
-    # HERO
-    # =====================================================
-
-    render_hero()
-
-    # =====================================================
-    # ESPACIADO
-    # =====================================================
-
-    st.markdown(
-        "<div style='height:10px'></div>",
-        unsafe_allow_html=True
-    )
-
-    # =====================================================
-    # KPIS
-    # =====================================================
-
-    render_kpis()
-
-    # =====================================================
-    # ESPACIADO
-    # =====================================================
-
-    st.markdown(
-        "<div style='height:30px'></div>",
-        unsafe_allow_html=True
-    )
-
-    # =====================================================
-    # MÓDULOS
-    # =====================================================
-
-    render_modules()
+# st.write("VIEW QUERY:", view_query)
 
 
 # =========================================================
-# ADMIN
+# MODO PÚBLICO
 # =========================================================
 
-elif st.session_state.page == "admin":
+if view_query == "asistencia":
 
-    render_admin()
-
-
-# =========================================================
-# ASISTENCIA
-# =========================================================
-
-elif st.session_state.page == "asistencia":
+    # st.write("ENTRANDO DIRECTO A ASISTENCIA")
 
     render_asistencia()
+
+# =========================================================
+# ERP
+# =========================================================
+
+else:
+
+    # st.write("ENTRANDO A ERP")
+
+    from ui.layout import load_css
+    from ui.layout import render_sidebar
+
+    from ui.components import render_hero
+    from ui.components import render_kpis
+    from ui.components import render_modules
+
+    from views.admin import render_admin
+
+    # =====================================================
+    # SESSION STATE
+    # =====================================================
+
+    if "page" not in st.session_state:
+
+        st.session_state.page = "home"
+
+    # =====================================================
+    # CSS
+    # =====================================================
+
+    load_css()
+
+    # =====================================================
+    # SIDEBAR
+    # =====================================================
+
+    render_sidebar()
+
+    # =====================================================
+    # HOME
+    # =====================================================
+
+    if st.session_state.page == "home":
+
+        render_hero()
+
+        st.markdown(
+            "<div style='height:10px'></div>",
+            unsafe_allow_html=True
+        )
+
+        render_kpis()
+
+        st.markdown(
+            "<div style='height:30px'></div>",
+            unsafe_allow_html=True
+        )
+
+        render_modules()
+
+    # =====================================================
+    # ADMIN
+    # =====================================================
+
+    elif st.session_state.page == "admin":
+
+        render_admin()
