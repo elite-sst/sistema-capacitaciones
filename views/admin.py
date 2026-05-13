@@ -76,13 +76,6 @@ def render_admin():
 
             st.markdown(
                 """
-                <div class="login-wrapper">
-                """,
-                unsafe_allow_html=True
-            )
-
-            st.markdown(
-                """
                 <div class="login-top-icon">
                     🛡️
                 </div>
@@ -108,16 +101,12 @@ def render_admin():
                 unsafe_allow_html=True
             )
 
-            st.markdown(
-                "<div style='height:12px'></div>",
-                unsafe_allow_html=True
-            )
-
             password = st.text_input(
                 "Contraseña",
                 type="password",
                 label_visibility="collapsed",
-                placeholder="Ingrese contraseña administrador"
+                placeholder="Ingrese contraseña administrador",
+                key="login_password"
             )
 
             st.markdown(
@@ -127,7 +116,8 @@ def render_admin():
 
             if st.button(
                 "Ingresar al Sistema",
-                use_container_width=True
+                use_container_width=True,
+                key="login_button"
             ):
 
                 if password == ADMIN_PASSWORD:
@@ -151,10 +141,6 @@ def render_admin():
                 unsafe_allow_html=True
             )
 
-            st.markdown(
-                "</div>",
-                unsafe_allow_html=True
-            )
             st.stop()
     # =========================================================
     # TABS
