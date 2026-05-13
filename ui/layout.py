@@ -127,35 +127,6 @@ def render_sidebar():
         )
 
         # =====================================================
-        # ASISTENCIA
-        # =====================================================
-        asistencia_class = (
-            "menu-active"
-            if st.session_state.page == "asistencia"
-            else ""
-        )
-
-        st.markdown(
-            f'<div class="{asistencia_class}">',
-            unsafe_allow_html=True
-        )
-
-        if st.button(
-            "📝 Asistencia",
-            key="btn_asistencia",
-            use_container_width=True
-        ):
-
-            st.session_state.page = "asistencia"
-
-            st.rerun()
-
-        st.markdown(
-            "</div>",
-            unsafe_allow_html=True
-        )
-            
-        # =====================================================
         # FOOTER
         # =====================================================
 

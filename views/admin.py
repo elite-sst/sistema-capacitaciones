@@ -430,8 +430,17 @@ def render_admin():
                         a.proyecto,
                         a.zona,
                         a.formador,
+                        f.nombre_formacion,
+                        f.fecha_asistencia,
+
+                        a.clasificacion_formacion,
+                        a.tipo_formacion,
+                        a.autoriza_datos,
                         a.fecha_registro
+                     
                     FROM asistencias a
+                    INNER JOIN formaciones f
+                        ON a.id_formacion = f.id 
                     WHERE a.id_formacion = :id_formacion
                     ORDER BY a.fecha_registro DESC
                 """),

@@ -446,12 +446,6 @@ def render_asistencia():
             ❌ La cédula no existe o está inactiva.
             """)
 
-        elif autoriza_datos == "No":
-
-            st.error("""
-            ❌ Debe autorizar el tratamiento de datos.
-            """)
-
         else:
 
             try:
