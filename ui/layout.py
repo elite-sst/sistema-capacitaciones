@@ -83,6 +83,17 @@ def render_sidebar():
         # HOME
         # =====================================================
 
+        home_class = (
+            "menu-active"
+            if st.session_state.page == "home"
+            else ""
+        )
+
+        st.markdown(
+            f'<div class="{home_class}">',
+            unsafe_allow_html=True
+        )
+
         if st.button(
             "🏠 Inicio",
             key="btn_home",
@@ -93,9 +104,25 @@ def render_sidebar():
 
             st.rerun()
 
+        st.markdown(
+            "</div>",
+            unsafe_allow_html=True
+        )
+
         # =====================================================
         # ADMIN
         # =====================================================
+
+        admin_class = (
+            "menu-active"
+            if st.session_state.page == "admin"
+            else ""
+        )
+
+        st.markdown(
+            f'<div class="{admin_class}">',
+            unsafe_allow_html=True
+        )
 
         if st.button(
             "⚙️ Administración",
@@ -107,9 +134,24 @@ def render_sidebar():
 
             st.rerun()
 
+        st.markdown(
+            "</div>",
+            unsafe_allow_html=True
+        )
+
         # =====================================================
         # ASISTENCIA
         # =====================================================
+        asistencia_class = (
+            "menu-active"
+            if st.session_state.page == "asistencia"
+            else ""
+        )
+
+        st.markdown(
+            f'<div class="{asistencia_class}">',
+            unsafe_allow_html=True
+        )
 
         if st.button(
             "📝 Asistencia",
@@ -122,10 +164,10 @@ def render_sidebar():
             st.rerun()
 
         st.markdown(
-            '</div>',
+            "</div>",
             unsafe_allow_html=True
         )
-
+            
         # =====================================================
         # FOOTER
         # =====================================================
