@@ -27,33 +27,29 @@ def render_admin():
     # HEADER ERP
     # =========================================================
 
-    header_col1, header_col2 = st.columns([5, 1])
+    st.html("""
 
-    with header_col1:
+        <div class="banner">
 
-        st.markdown(
-            """
-            <div class="banner-title">
-                🔐 Panel Administrador
+            <div class="banner-left">
+
+                <div class="banner-title">
+                    🔐 Panel Administrador
+                </div>
+
+                <div class="banner-sub">
+                    Gestión corporativa Elite Ingenieros
+                </div>
+
             </div>
 
-            <div class="banner-sub">
-                Gestión corporativa Elite Ingenieros
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-    with header_col2:
-
-        st.markdown(
-            """
             <div class="banner-badge">
                 Sistema Seguro
             </div>
-            """,
-            unsafe_allow_html=True
-        )
+
+        </div>
+
+        """)
 
     # =========================================================
     # LOGIN ADMIN
@@ -71,44 +67,95 @@ def render_admin():
 
         with col2:
 
-            with st.container(border=True):
+            st.markdown(
+                """
+                <div class="login-glow"></div>
+                """,
+                unsafe_allow_html=True
+            )
 
-                st.markdown("## 🔐 Acceso Admin")
+            st.markdown(
+                """
+                <div class="login-wrapper">
+                """,
+                unsafe_allow_html=True
+            )
 
-                st.caption(
-                    "Ingrese credenciales corporativas"
-                )
+            st.markdown(
+                """
+                <div class="login-top-icon">
+                    🛡️
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
-                password = st.text_input(
-                    "Contraseña",
-                    type="password",
-                    label_visibility="collapsed",
-                    placeholder="Ingrese contraseña administrador"
-                )
+            st.markdown(
+                """
+                <div class="login-title">
+                    Acceso Corporativo
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
-                st.markdown(
-                    "<br>",
-                    unsafe_allow_html=True
-                )
+            st.markdown(
+                """
+                <div class="login-subtitle">
+                    Plataforma segura de administración empresarial
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
-                if st.button(
-                    "Ingresar al Panel",
-                    use_container_width=True
-                ):
+            st.markdown(
+                "<div style='height:12px'></div>",
+                unsafe_allow_html=True
+            )
 
-                    if password == ADMIN_PASSWORD:
+            password = st.text_input(
+                "Contraseña",
+                type="password",
+                label_visibility="collapsed",
+                placeholder="Ingrese contraseña administrador"
+            )
 
-                        st.session_state.admin_autenticado = True
-                        st.rerun()
+            st.markdown(
+                "<div style='height:18px'></div>",
+                unsafe_allow_html=True
+            )
 
-                    else:
+            if st.button(
+                "Ingresar al Sistema",
+                use_container_width=True
+            ):
 
-                        st.error(
-                            "❌ Contraseña incorrecta"
-                        )
+                if password == ADMIN_PASSWORD:
 
-        st.stop()
+                    st.session_state.admin_autenticado = True
 
+                    st.rerun()
+
+                else:
+
+                    st.error(
+                        "❌ Contraseña incorrecta"
+                    )
+
+            st.markdown(
+                """
+                <div class="login-footer">
+                    Elite Ingenieros · ERP SaaS
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            st.markdown(
+                "</div>",
+                unsafe_allow_html=True
+            )
+            st.stop()
     # =========================================================
     # TABS
     # =========================================================
