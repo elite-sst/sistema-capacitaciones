@@ -406,11 +406,34 @@ def render_admin():
                 """),
                 conn
             )
+        # =====================================================
+        # FORMACIONES
+        # =====================================================
 
         opciones = {
             f"{row.id} - {row.nombre_formacion}": row.id
             for row in df_formaciones.itertuples()
         }
+
+        # =====================================================
+        # VALIDAR FORMACIONES
+        # =====================================================
+
+        if not opciones:
+
+            st.warning(
+                "⚠️ No existen formaciones registradas."
+            )
+
+            st.info(
+                "Cree una formación para visualizar reportes."
+            )
+
+            st.stop()
+
+        # =====================================================
+        # SELECT FORMACIÓN
+        # =====================================================
 
         seleccion = st.selectbox(
             "Seleccione formación",
