@@ -171,19 +171,19 @@ SECTION TITLE
 }
 
 /* =========================================================
-OCULTAR NAV STREAMLIT
+SIDEBAR MENU ERP
 ========================================================= */
 
-[data-testid="stSidebarNav"] {
+.sidebar-menu {
 
-    display:none !important;
+    width:100%;
 }
 
 /* =========================================================
-PAGE LINK WRAPPER
+BOTONES SIDEBAR
 ========================================================= */
 
-[data-testid="stPageLink"] {
+.sidebar-menu .stButton {
 
     margin-bottom:12px;
 }
@@ -192,51 +192,57 @@ PAGE LINK WRAPPER
 BOTONES ERP PREMIUM
 ========================================================= */
 
-[data-testid="stPageLink"] a {
+.sidebar-menu .stButton button {
 
-    display:flex;
+    width:100% !important;
 
-    align-items:center;
+    display:flex !important;
 
-    gap:12px;
+    align-items:center !important;
 
-    padding:15px 18px;
+    justify-content:flex-start !important;
 
-    border-radius:18px;
+    gap:12px !important;
 
-    text-decoration:none !important;
+    padding:15px 18px !important;
+
+    border-radius:18px !important;
 
     background:
         linear-gradient(
             180deg,
             #ffffff 0%,
             #f8fafc 100%
-        );
+        ) !important;
 
     color:#334155 !important;
 
     border:
-        1px solid #e2e8f0;
+        1px solid #e2e8f0 !important;
 
-    transition:all .25s ease;
+    transition:all .25s ease !important;
 
-    font-weight:700;
+    font-weight:700 !important;
 
-    font-size:15px;
+    font-size:15px !important;
 
-    position:relative;
+    position:relative !important;
 
-    overflow:hidden;
+    overflow:hidden !important;
 
     box-shadow:
-        0 6px 14px rgba(0,0,0,0.05);
+        0 6px 14px rgba(0,0,0,0.05) !important;
+
+    text-align:left !important;
+
+    min-height:56px !important;
 }
 
 /* =========================================================
 BARRA VERDE
 ========================================================= */
 
-[data-testid="stPageLink"] a::before {
+.sidebar-menu .stButton button::before {
 
     content:"";
 
@@ -266,7 +272,7 @@ BARRA VERDE
 HOVER BOTONES
 ========================================================= */
 
-[data-testid="stPageLink"] a:hover {
+.sidebar-menu .stButton button:hover {
 
     transform:
         translateX(6px)
@@ -277,47 +283,34 @@ HOVER BOTONES
             90deg,
             #ecfdf5 0%,
             #f0fdf4 100%
-        );
+        ) !important;
 
     border:
-        1px solid #bbf7d0;
+        1px solid #bbf7d0 !important;
 
     color:#166534 !important;
 
     box-shadow:
-        0 14px 24px rgba(34,197,94,0.16);
+        0 14px 24px rgba(34,197,94,0.16) !important;
 }
 
 /* =========================================================
 ACTIVAR BARRA
 ========================================================= */
 
-[data-testid="stPageLink"] a:hover::before {
+.sidebar-menu .stButton button:hover::before {
 
     opacity:1;
 }
 
 /* =========================================================
-BOTÓN ACTIVO
+CLICK BOTÓN
 ========================================================= */
 
-[data-testid="stPageLink"] a[aria-current="page"] {
+.sidebar-menu .stButton button:active {
 
-    background:
-        linear-gradient(
-            135deg,
-            #16a34a 0%,
-            #22c55e 100%
-        );
-
-    color:white !important;
-
-    border:none;
-
-    box-shadow:
-        0 14px 28px rgba(34,197,94,0.28);
+    transform:scale(0.98);
 }
-
 /* =========================================================
 FOOTER SIDEBAR
 ========================================================= */
@@ -742,3 +735,4 @@ RESPONSIVE
         width:210px !important;
     }
 }
+

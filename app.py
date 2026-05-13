@@ -7,6 +7,9 @@ from ui.components import render_hero
 from ui.components import render_kpis
 from ui.components import render_modules
 
+from views.admin import render_admin
+from views.asistencia import render_asistencia
+
 
 # =========================================================
 # CONFIGURACIÓN GENERAL
@@ -25,49 +28,84 @@ st.set_page_config(
 
 
 # =========================================================
-# CARGAR ESTILOS
+# SESSION STATE ROUTER
+# =========================================================
+
+if "page" not in st.session_state:
+
+    st.session_state.page = "home"
+
+
+# =========================================================
+# CARGAR CSS
 # =========================================================
 
 load_css()
 
 
 # =========================================================
-# SIDEBAR
+# SIDEBAR ERP
 # =========================================================
 
 render_sidebar()
 
 
 # =========================================================
-# HERO SECTION
+# ROUTER PRINCIPAL
 # =========================================================
 
-render_hero()
+if st.session_state.page == "home":
+
+    # =====================================================
+    # HERO
+    # =====================================================
+
+    render_hero()
+
+    # =====================================================
+    # ESPACIADO
+    # =====================================================
+
+    st.markdown(
+        "<div style='height:10px'></div>",
+        unsafe_allow_html=True
+    )
+
+    # =====================================================
+    # KPIS
+    # =====================================================
+
+    render_kpis()
+
+    # =====================================================
+    # ESPACIADO
+    # =====================================================
+
+    st.markdown(
+        "<div style='height:30px'></div>",
+        unsafe_allow_html=True
+    )
+
+    # =====================================================
+    # MÓDULOS
+    # =====================================================
+
+    render_modules()
 
 
 # =========================================================
-# ESPACIADO
+# ADMIN
 # =========================================================
 
-st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
+elif st.session_state.page == "admin":
 
-
-# =========================================================
-# KPIS
-# =========================================================
-
-render_kpis()
+    render_admin()
 
 
 # =========================================================
-# ESPACIADO
+# ASISTENCIA
 # =========================================================
 
-st.markdown("<div style='height:30px'></div>", unsafe_allow_html=True)
+elif st.session_state.page == "asistencia":
 
-
-# =========================================================
-# MÓDULOS
-# =========================================================
-
-render_modules()
+    render_asistencia()

@@ -1,4 +1,5 @@
 import streamlit as st
+
 from pathlib import Path
 
 
@@ -24,6 +25,7 @@ def load_css():
         st.error(
             "No se encontró el archivo main.css"
         )
+
 
 # =========================================================
 # SIDEBAR ERP
@@ -54,26 +56,6 @@ def render_sidebar():
                 str(logo_path),
                 use_container_width=True
             )
-        # =====================================================
-        # EMPRESA
-        # =====================================================
-
-        # st.markdown(
-        #     """
-        #         <div class="sidebar-company">
-        #             Elite SST
-        #         </div>
-
-        #         <div class="sidebar-subtitle">
-        #             Plataforma Empresarial
-        #         </div>
-
-        #         <div class="sidebar-divider"></div>
-
-        #     </div>
-        #     """,
-        #     unsafe_allow_html=True
-        # )
 
         # =====================================================
         # MODULOS
@@ -92,17 +74,56 @@ def render_sidebar():
         # MENU ERP
         # =====================================================
 
-
-        st.page_link(
-            "pages/1_Admin.py",
-            label="Administración",
-            icon="⚙️"
+        st.markdown(
+            '<div class="sidebar-menu">',
+            unsafe_allow_html=True
         )
 
-        st.page_link(
-            "pages/2_Asistencia.py",
-            label="Asistencia",
-            icon="📝"
+        # =====================================================
+        # HOME
+        # =====================================================
+
+        if st.button(
+            "🏠 Inicio",
+            key="btn_home",
+            use_container_width=True
+        ):
+
+            st.session_state.page = "home"
+
+            st.rerun()
+
+        # =====================================================
+        # ADMIN
+        # =====================================================
+
+        if st.button(
+            "⚙️ Administración",
+            key="btn_admin",
+            use_container_width=True
+        ):
+
+            st.session_state.page = "admin"
+
+            st.rerun()
+
+        # =====================================================
+        # ASISTENCIA
+        # =====================================================
+
+        if st.button(
+            "📝 Asistencia",
+            key="btn_asistencia",
+            use_container_width=True
+        ):
+
+            st.session_state.page = "asistencia"
+
+            st.rerun()
+
+        st.markdown(
+            '</div>',
+            unsafe_allow_html=True
         )
 
         # =====================================================
