@@ -9,7 +9,7 @@ from views.asistencia import render_asistencia
 
 st.set_page_config(
 
-    page_title="Gestión corporativa de asistencia y formación del personal",
+    page_title="Sistema Capacitaciones",
 
     page_icon="📋",
 

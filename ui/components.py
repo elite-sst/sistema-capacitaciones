@@ -13,11 +13,11 @@ def render_hero():
     <div class="banner-left">
 
         <div class="banner-title">
-            📋 Sistema Capacitaciones
+            📋 Portal de Formación Elite
         </div>
 
         <div class="banner-sub">
-            Plataforma corporativa empresarial
+            Gestión corporativa de formación y asistencia
         </div>
 
     </div>
