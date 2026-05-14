@@ -514,7 +514,7 @@ def render_asistencia():
         resultado_5 = respuestas.get(5, {}).get("resultado")
 
         puntaje = sum(
-            1
+            20
             for item in respuestas.values()
             if item.get("resultado") == "Correcta"
         )
@@ -623,6 +623,20 @@ def render_asistencia():
                     conn.commit()
 
                 st.success("✅ Asistencia registrada correctamente.")
+             
+                if tipo_registro == "Capacitación":
+
+                    total_preguntas = len(respuestas)
+
+                    correctas = sum(
+                        1
+                        for item in respuestas.values()
+                        if item.get("resultado") == "Correcta"
+                    )
+
+                    st.info(
+                        f"📊 Resultado evaluación: {correctas} de {total_preguntas} correctas. Puntaje: {puntaje} puntos."
+                    )
 
             except Exception as e:
 
