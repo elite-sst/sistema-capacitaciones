@@ -769,7 +769,7 @@ def render_admin():
         # KPIS
         # =====================================================
 
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns([1, 3])
 
         with col1:
 
@@ -782,13 +782,34 @@ def render_admin():
 
             nombre_kpi = seleccion.split("-", 1)[1].strip()
 
-            if len(nombre_kpi) > 45:
+            st.markdown(
+                f"""
+                <div style="
+                    background:white;
+                    border-radius:14px;
+                    padding:14px 18px;
+                    border:1px solid #e2e8f0;
+                ">
+                    <div style="
+                        font-size:13px;
+                        color:#64748b;
+                        font-weight:600;
+                        margin-bottom:6px;
+                    ">
+                        📚 Formación
+                    </div>
 
-                nombre_kpi = nombre_kpi[:45] + "..."
-
-            st.metric(
-                "📚 Formación",
-                nombre_kpi
+                    <div style="
+                        font-size:18px;
+                        color:#0f172a;
+                        font-weight:700;
+                        line-height:1.25;
+                    ">
+                        {nombre_kpi}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
             )
 
         # =====================================================
