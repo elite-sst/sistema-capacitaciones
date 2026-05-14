@@ -782,35 +782,32 @@ def render_admin():
 
             nombre_kpi = seleccion.split("-", 1)[1].strip()
 
-            st.markdown(
-                f"""
+            st.html(f"""
+            <div style="
+                background:#f0fdf4;
+                border-radius:14px;
+                padding:14px 18px;
+                border:1px solid #e2e8f0;
+            ">
                 <div style="
-                    background:white;
-                    border-radius:14px;
-                    padding:14px 18px;
-                    border:1px solid #e2e8f0;
+                    font-size:13px;
+                    color:#64748b;
+                    font-weight:600;
+                    margin-bottom:6px;
                 ">
-                    <div style="
-                        font-size:13px;
-                        color:#64748b;
-                        font-weight:600;
-                        margin-bottom:6px;
-                    ">
-                        📚 Formación
-                    </div>
-
-                    <div style="
-                        font-size:18px;
-                        color:#0f172a;
-                        font-weight:700;
-                        line-height:1.25;
-                    ">
-                        {nombre_kpi}
-                    </div>
+                    📚 Formación
                 </div>
-                """,
-                unsafe_allow_html=True
-            )
+
+                <div style="
+                    font-size:18px;
+                    color:#0f172a;
+                    font-weight:800;
+                    line-height:1.25;
+                ">
+                    {nombre_kpi}
+                </div>
+            </div>
+            """)
 
         # =====================================================
         # EXPORTAR EXCEL
