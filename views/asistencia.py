@@ -280,18 +280,28 @@ def render_asistencia():
 
     if logo_path.exists():
 
-        col_logo1, col_logo2, col_logo3 = st.columns([1, 1, 1])
+        st.markdown(
+            """
+            <div style="
+                width:100%;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                margin-bottom:12px;
+            ">
+            """,
+            unsafe_allow_html=True
+        )
 
-        with col_logo2:
+        st.image(
+            str(logo_path),
+            width=150
+        )
 
-            st.image(
-                str(logo_path),
-                width=150
-            )
-            st.markdown(
-                "<div style='height:10px'></div>",
-                unsafe_allow_html=True
-            )    
+        st.markdown(
+            "</div>",
+            unsafe_allow_html=True
+        )
     st.markdown(
         """
         <div class="titulo-principal">
