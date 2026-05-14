@@ -733,7 +733,6 @@ def render_admin():
                         a.formador,
                         f.nombre_formacion,
                         f.fecha_asistencia,
-                        f.tipo_registro,
                         a.clasificacion_formacion,
                         a.tipo_formacion,
                         a.autoriza_datos,
