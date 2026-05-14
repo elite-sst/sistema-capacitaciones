@@ -280,7 +280,7 @@ def render_asistencia():
 
     if logo_path.exists():
 
-        col_logo1, col_logo2, col_logo3 = st.columns([1.4, 1, 1.4])
+        col_logo1, col_logo2, col_logo3 = st.columns([1, 1, 1])
 
         with col_logo2:
 
