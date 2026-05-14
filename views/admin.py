@@ -780,15 +780,16 @@ def render_admin():
 
         with col2:
 
+            nombre_kpi = seleccion.split("-", 1)[1].strip()
+
+            if len(nombre_kpi) > 45:
+
+                nombre_kpi = nombre_kpi[:45] + "..."
+
             st.metric(
                 "📚 Formación",
-                seleccion.split("-")[1].strip()
+                nombre_kpi
             )
-
-        st.markdown(
-            "<br>",
-            unsafe_allow_html=True
-        )
 
         # =====================================================
         # EXPORTAR EXCEL
