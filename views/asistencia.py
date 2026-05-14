@@ -286,7 +286,7 @@ def render_asistencia():
 
             st.image(
                 str(logo_path),
-                width=180
+                width=150
             )
             st.markdown(
                 "<div style='height:10px'></div>",
