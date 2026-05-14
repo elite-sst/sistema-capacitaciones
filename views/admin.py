@@ -180,7 +180,54 @@ def render_admin():
             "Formador",
             value="Eduardo Florez"
         )
+        # =====================================================
+        # TIPO REGISTRO
+        # =====================================================
 
+        tipo_registro = st.radio(
+            "Tipo de registro",
+            [
+                "Charla",
+                "Capacitación"
+            ],
+            horizontal=True
+        )
+
+        pregunta_1 = None
+        pregunta_2 = None
+        pregunta_3 = None
+        pregunta_4 = None
+        pregunta_5 = None
+
+        # =====================================================
+        # PREGUNTAS CAPACITACIÓN
+        # =====================================================
+
+        if tipo_registro == "Capacitación":
+
+            st.markdown(
+                "### 📝 Preguntas de evaluación"
+            )
+
+            pregunta_1 = st.text_input(
+                "Pregunta 1"
+            )
+
+            pregunta_2 = st.text_input(
+                "Pregunta 2"
+            )
+
+            pregunta_3 = st.text_input(
+                "Pregunta 3"
+            )
+
+            pregunta_4 = st.text_input(
+                "Pregunta 4"
+            )
+
+            pregunta_5 = st.text_input(
+                "Pregunta 5"
+            )
         if st.button(
             "Crear formación",
             use_container_width=True
@@ -203,19 +250,37 @@ def render_admin():
                                 INSERT INTO formaciones (
                                     nombre_formacion,
                                     fecha_asistencia,
-                                    formador
+                                    formador,
+                                    tipo_registro,
+                                    pregunta_1,
+                                    pregunta_2,
+                                    pregunta_3,
+                                    pregunta_4,
+                                    pregunta_5
                                 )
                                 VALUES (
                                     :nombre_formacion,
                                     :fecha_asistencia,
-                                    :formador
+                                    :formador,
+                                    :tipo_registro,
+                                    :pregunta_1,
+                                    :pregunta_2,
+                                    :pregunta_3,
+                                    :pregunta_4,
+                                    :pregunta_5
                                 )
                                 RETURNING id
                             """),
                             {
                                 "nombre_formacion": nombre_formacion.strip(),
                                 "fecha_asistencia": fecha,
-                                "formador": formador.strip()
+                                "formador": formador.strip(),
+                                "tipo_registro": tipo_registro,
+                                "pregunta_1": pregunta_1,
+                                "pregunta_2": pregunta_2,
+                                "pregunta_3": pregunta_3,
+                                "pregunta_4": pregunta_4,
+                                "pregunta_5": pregunta_5
                             }
                         )
 
