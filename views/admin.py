@@ -710,7 +710,16 @@ def render_admin():
         )
 
         id_seleccionado = opciones[seleccion]
+        # =====================================================
+        # ACTUALIZAR REPORTE
+        # =====================================================
 
+        if st.button(
+            "🔄 Actualizar reporte",
+            use_container_width=True
+        ):
+
+            st.rerun()
         with engine.begin() as conn:
 
             df_asistencias = pd.read_sql(
