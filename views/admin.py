@@ -142,6 +142,7 @@ def render_admin():
             )
 
             st.stop()
+
     # =========================================================
     # TABS
     # =========================================================
@@ -180,6 +181,7 @@ def render_admin():
             "Formador",
             value="Eduardo Florez"
         )
+
         # =====================================================
         # TIPO REGISTRO
         # =====================================================
@@ -193,11 +195,45 @@ def render_admin():
             horizontal=True
         )
 
+        # =====================================================
+        # VARIABLES PREGUNTAS
+        # =====================================================
+
         pregunta_1 = None
         pregunta_2 = None
         pregunta_3 = None
         pregunta_4 = None
         pregunta_5 = None
+
+        p1_opcion_a = None
+        p1_opcion_b = None
+        p1_opcion_c = None
+        p1_opcion_d = None
+        p1_correcta = None
+
+        p2_opcion_a = None
+        p2_opcion_b = None
+        p2_opcion_c = None
+        p2_opcion_d = None
+        p2_correcta = None
+
+        p3_opcion_a = None
+        p3_opcion_b = None
+        p3_opcion_c = None
+        p3_opcion_d = None
+        p3_correcta = None
+
+        p4_opcion_a = None
+        p4_opcion_b = None
+        p4_opcion_c = None
+        p4_opcion_d = None
+        p4_correcta = None
+
+        p5_opcion_a = None
+        p5_opcion_b = None
+        p5_opcion_c = None
+        p5_opcion_d = None
+        p5_correcta = None
 
         # =====================================================
         # PREGUNTAS CAPACITACIÓN
@@ -205,29 +241,127 @@ def render_admin():
 
         if tipo_registro == "Capacitación":
 
-            st.markdown(
-                "### 📝 Preguntas de evaluación"
-            )
+            st.markdown("### 📝 Preguntas de evaluación")
 
-            pregunta_1 = st.text_input(
-                "Pregunta 1"
-            )
+            with st.expander("Pregunta 1", expanded=True):
 
-            pregunta_2 = st.text_input(
-                "Pregunta 2"
-            )
+                pregunta_1 = st.text_input("Texto pregunta 1")
 
-            pregunta_3 = st.text_input(
-                "Pregunta 3"
-            )
+                col_a, col_b = st.columns(2)
 
-            pregunta_4 = st.text_input(
-                "Pregunta 4"
-            )
+                with col_a:
 
-            pregunta_5 = st.text_input(
-                "Pregunta 5"
-            )
+                    p1_opcion_a = st.text_input("Pregunta 1 - Opción A")
+                    p1_opcion_b = st.text_input("Pregunta 1 - Opción B")
+
+                with col_b:
+
+                    p1_opcion_c = st.text_input("Pregunta 1 - Opción C")
+                    p1_opcion_d = st.text_input("Pregunta 1 - Opción D")
+
+                p1_correcta = st.radio(
+                    "Respuesta correcta pregunta 1",
+                    ["A", "B", "C", "D"],
+                    horizontal=True,
+                    key="p1_correcta"
+                )
+
+            with st.expander("Pregunta 2"):
+
+                pregunta_2 = st.text_input("Texto pregunta 2")
+
+                col_a, col_b = st.columns(2)
+
+                with col_a:
+
+                    p2_opcion_a = st.text_input("Pregunta 2 - Opción A")
+                    p2_opcion_b = st.text_input("Pregunta 2 - Opción B")
+
+                with col_b:
+
+                    p2_opcion_c = st.text_input("Pregunta 2 - Opción C")
+                    p2_opcion_d = st.text_input("Pregunta 2 - Opción D")
+
+                p2_correcta = st.radio(
+                    "Respuesta correcta pregunta 2",
+                    ["A", "B", "C", "D"],
+                    horizontal=True,
+                    key="p2_correcta"
+                )
+
+            with st.expander("Pregunta 3"):
+
+                pregunta_3 = st.text_input("Texto pregunta 3")
+
+                col_a, col_b = st.columns(2)
+
+                with col_a:
+
+                    p3_opcion_a = st.text_input("Pregunta 3 - Opción A")
+                    p3_opcion_b = st.text_input("Pregunta 3 - Opción B")
+
+                with col_b:
+
+                    p3_opcion_c = st.text_input("Pregunta 3 - Opción C")
+                    p3_opcion_d = st.text_input("Pregunta 3 - Opción D")
+
+                p3_correcta = st.radio(
+                    "Respuesta correcta pregunta 3",
+                    ["A", "B", "C", "D"],
+                    horizontal=True,
+                    key="p3_correcta"
+                )
+
+            with st.expander("Pregunta 4"):
+
+                pregunta_4 = st.text_input("Texto pregunta 4")
+
+                col_a, col_b = st.columns(2)
+
+                with col_a:
+
+                    p4_opcion_a = st.text_input("Pregunta 4 - Opción A")
+                    p4_opcion_b = st.text_input("Pregunta 4 - Opción B")
+
+                with col_b:
+
+                    p4_opcion_c = st.text_input("Pregunta 4 - Opción C")
+                    p4_opcion_d = st.text_input("Pregunta 4 - Opción D")
+
+                p4_correcta = st.radio(
+                    "Respuesta correcta pregunta 4",
+                    ["A", "B", "C", "D"],
+                    horizontal=True,
+                    key="p4_correcta"
+                )
+
+            with st.expander("Pregunta 5"):
+
+                pregunta_5 = st.text_input("Texto pregunta 5")
+
+                col_a, col_b = st.columns(2)
+
+                with col_a:
+
+                    p5_opcion_a = st.text_input("Pregunta 5 - Opción A")
+                    p5_opcion_b = st.text_input("Pregunta 5 - Opción B")
+
+                with col_b:
+
+                    p5_opcion_c = st.text_input("Pregunta 5 - Opción C")
+                    p5_opcion_d = st.text_input("Pregunta 5 - Opción D")
+
+                p5_correcta = st.radio(
+                    "Respuesta correcta pregunta 5",
+                    ["A", "B", "C", "D"],
+                    horizontal=True,
+                    key="p5_correcta"
+                )
+
+        # =====================================================
+        # CREAR FORMACIÓN
+        # =====================================================
+
         if st.button(
             "Crear formación",
             use_container_width=True
@@ -237,6 +371,12 @@ def render_admin():
 
                 st.warning(
                     "⚠️ Debe ingresar el nombre"
+                )
+
+            elif tipo_registro == "Capacitación" and not pregunta_1:
+
+                st.warning(
+                    "⚠️ Para una capacitación debe ingresar al menos la pregunta 1."
                 )
 
             else:
@@ -256,7 +396,32 @@ def render_admin():
                                     pregunta_2,
                                     pregunta_3,
                                     pregunta_4,
-                                    pregunta_5
+                                    pregunta_5,
+                                    p1_opcion_a,
+                                    p1_opcion_b,
+                                    p1_opcion_c,
+                                    p1_opcion_d,
+                                    p1_correcta,
+                                    p2_opcion_a,
+                                    p2_opcion_b,
+                                    p2_opcion_c,
+                                    p2_opcion_d,
+                                    p2_correcta,
+                                    p3_opcion_a,
+                                    p3_opcion_b,
+                                    p3_opcion_c,
+                                    p3_opcion_d,
+                                    p3_correcta,
+                                    p4_opcion_a,
+                                    p4_opcion_b,
+                                    p4_opcion_c,
+                                    p4_opcion_d,
+                                    p4_correcta,
+                                    p5_opcion_a,
+                                    p5_opcion_b,
+                                    p5_opcion_c,
+                                    p5_opcion_d,
+                                    p5_correcta
                                 )
                                 VALUES (
                                     :nombre_formacion,
@@ -267,7 +432,32 @@ def render_admin():
                                     :pregunta_2,
                                     :pregunta_3,
                                     :pregunta_4,
-                                    :pregunta_5
+                                    :pregunta_5,
+                                    :p1_opcion_a,
+                                    :p1_opcion_b,
+                                    :p1_opcion_c,
+                                    :p1_opcion_d,
+                                    :p1_correcta,
+                                    :p2_opcion_a,
+                                    :p2_opcion_b,
+                                    :p2_opcion_c,
+                                    :p2_opcion_d,
+                                    :p2_correcta,
+                                    :p3_opcion_a,
+                                    :p3_opcion_b,
+                                    :p3_opcion_c,
+                                    :p3_opcion_d,
+                                    :p3_correcta,
+                                    :p4_opcion_a,
+                                    :p4_opcion_b,
+                                    :p4_opcion_c,
+                                    :p4_opcion_d,
+                                    :p4_correcta,
+                                    :p5_opcion_a,
+                                    :p5_opcion_b,
+                                    :p5_opcion_c,
+                                    :p5_opcion_d,
+                                    :p5_correcta
                                 )
                                 RETURNING id
                             """),
@@ -280,7 +470,32 @@ def render_admin():
                                 "pregunta_2": pregunta_2,
                                 "pregunta_3": pregunta_3,
                                 "pregunta_4": pregunta_4,
-                                "pregunta_5": pregunta_5
+                                "pregunta_5": pregunta_5,
+                                "p1_opcion_a": p1_opcion_a,
+                                "p1_opcion_b": p1_opcion_b,
+                                "p1_opcion_c": p1_opcion_c,
+                                "p1_opcion_d": p1_opcion_d,
+                                "p1_correcta": p1_correcta,
+                                "p2_opcion_a": p2_opcion_a,
+                                "p2_opcion_b": p2_opcion_b,
+                                "p2_opcion_c": p2_opcion_c,
+                                "p2_opcion_d": p2_opcion_d,
+                                "p2_correcta": p2_correcta,
+                                "p3_opcion_a": p3_opcion_a,
+                                "p3_opcion_b": p3_opcion_b,
+                                "p3_opcion_c": p3_opcion_c,
+                                "p3_opcion_d": p3_opcion_d,
+                                "p3_correcta": p3_correcta,
+                                "p4_opcion_a": p4_opcion_a,
+                                "p4_opcion_b": p4_opcion_b,
+                                "p4_opcion_c": p4_opcion_c,
+                                "p4_opcion_d": p4_opcion_d,
+                                "p4_correcta": p4_correcta,
+                                "p5_opcion_a": p5_opcion_a,
+                                "p5_opcion_b": p5_opcion_b,
+                                "p5_opcion_c": p5_opcion_c,
+                                "p5_opcion_d": p5_opcion_d,
+                                "p5_correcta": p5_correcta
                             }
                         )
 
@@ -471,18 +686,11 @@ def render_admin():
                 """),
                 conn
             )
-        # =====================================================
-        # FORMACIONES
-        # =====================================================
 
         opciones = {
             f"{row.id} - {row.nombre_formacion}": row.id
             for row in df_formaciones.itertuples()
         }
-
-        # =====================================================
-        # VALIDAR FORMACIONES
-        # =====================================================
 
         if not opciones:
 
@@ -495,10 +703,6 @@ def render_admin():
             )
 
             st.stop()
-
-        # =====================================================
-        # SELECT FORMACIÓN
-        # =====================================================
 
         seleccion = st.selectbox(
             "Seleccione formación",
@@ -520,15 +724,25 @@ def render_admin():
                         a.formador,
                         f.nombre_formacion,
                         f.fecha_asistencia,
-
+                        f.tipo_registro,
                         a.clasificacion_formacion,
                         a.tipo_formacion,
                         a.autoriza_datos,
+                        a.respuesta_1,
+                        a.resultado_1,
+                        a.respuesta_2,
+                        a.resultado_2,
+                        a.respuesta_3,
+                        a.resultado_3,
+                        a.respuesta_4,
+                        a.resultado_4,
+                        a.respuesta_5,
+                        a.resultado_5,
+                        a.puntaje,
                         a.fecha_registro
-                     
                     FROM asistencias a
                     INNER JOIN formaciones f
-                        ON a.id_formacion = f.id 
+                        ON a.id_formacion = f.id
                     WHERE a.id_formacion = :id_formacion
                     ORDER BY a.fecha_registro DESC
                 """),
@@ -589,10 +803,6 @@ def render_admin():
 
                 worksheet = writer.sheets["Reporte"]
 
-                # =============================================
-                # HEADER
-                # =============================================
-
                 for cell in worksheet[1]:
 
                     cell.font = Font(
@@ -611,10 +821,6 @@ def render_admin():
                         fill_type="solid"
                     )
 
-                # =============================================
-                # AUTO AJUSTE
-                # =============================================
-
                 for column_cells in worksheet.columns:
 
                     length = max(
@@ -628,10 +834,6 @@ def render_admin():
                             column_cells[0].column
                         )
                     ].width = length + 5
-
-                # =============================================
-                # TABLA
-                # =============================================
 
                 total_filas = len(df_asistencias) + 1
                 total_columnas = len(df_asistencias.columns)
