@@ -2,6 +2,7 @@ import streamlit as st
 
 from sqlalchemy import text
 from utils.db import get_connection
+from pathlib import Path
 
 
 # =========================================================
@@ -275,6 +276,22 @@ def render_asistencia():
     # HEADER
     # =========================================================
 
+    logo_path = Path("assets/logo_elite_sin_fondo.png")
+
+    if logo_path.exists():
+
+        col_logo1, col_logo2, col_logo3 = st.columns([1.4, 1, 1.4])
+
+        with col_logo2:
+
+            st.image(
+                str(logo_path),
+                width=180
+            )
+            st.markdown(
+                "<div style='height:10px'></div>",
+                unsafe_allow_html=True
+            )    
     st.markdown(
         """
         <div class="titulo-principal">
