@@ -3,7 +3,7 @@ import streamlit as st
 from sqlalchemy import text
 from utils.db import get_connection
 from pathlib import Path
-
+import base64
 
 # =========================================================
 # RENDER ASISTENCIA
@@ -280,26 +280,16 @@ def render_asistencia():
 
     if logo_path.exists():
 
+        logo_base64 = base64.b64encode(
+            logo_path.read_bytes()
+        ).decode()
+
         st.markdown(
-            """
-            <div style="
-                width:100%;
-                display:flex;
-                justify-content:center;
-                align-items:center;
-                margin-bottom:12px;
-            ">
+            f"""
+            <div style="text-align:center; margin-bottom:12px;">
+                <img src="data:image/png;base64,{logo_base64}" style="width:150px;">
+            </div>
             """,
-            unsafe_allow_html=True
-        )
-
-        st.image(
-            str(logo_path),
-            width=150
-        )
-
-        st.markdown(
-            "</div>",
             unsafe_allow_html=True
         )
     st.markdown(
