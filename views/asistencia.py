@@ -403,14 +403,13 @@ def render_asistencia():
     # FORMULARIO
     # =========================================================
 
-    clasificacion = st.radio(
+    st.text_input(
         "Clasificación de formación",
-        [
-            "Charla",
-            "Capacitación"
-        ],
-        index=0 if tipo_registro == "Charla" else 1
+        value=tipo_registro,
+        disabled=True
     )
+
+    clasificacion = tipo_registro
 
     tipo_formacion = st.radio(
         "Tipo de formación",
