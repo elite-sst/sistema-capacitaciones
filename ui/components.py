@@ -1,5 +1,8 @@
 import streamlit as st
 
+from sqlalchemy import text
+from utils.db import engine
+
 
 # =========================================================
 # HERO
@@ -52,21 +55,53 @@ def render_kpi(valor, texto):
 
 
 # =========================================================
-# KPIS
+# KPIS DINÁMICOS
 # =========================================================
 
 def render_kpis():
 
+    try:
+
+        with engine.begin() as conn:
+
+            total_formaciones = conn.execute(
+                text("""
+                    SELECT COUNT(*)
+                    FROM formaciones
+                """)
+            ).scalar() or 0
+
+            total_empleados = conn.execute(
+                text("""
+                    SELECT COUNT(*)
+                    FROM empleados
+                    WHERE estado = 'ACTIVO'
+                """)
+            ).scalar() or 0
+
+            total_asistencias = conn.execute(
+                text("""
+                    SELECT COUNT(*)
+                    FROM asistencias
+                """)
+            ).scalar() or 0
+
+    except Exception:
+
+        total_formaciones = 0
+        total_empleados = 0
+        total_asistencias = 0
+
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
-        render_kpi("128", "Capacitaciones")
+        render_kpi(total_formaciones, "Formaciones")
 
     with col2:
-        render_kpi("540", "Empleados")
+        render_kpi(total_empleados, "Empleados")
 
     with col3:
-        render_kpi("98%", "Cobertura")
+        render_kpi(total_asistencias, "Asistencias")
 
     with col4:
         render_kpi("Activo", "Estado")
@@ -91,7 +126,7 @@ def render_modules():
 
     <div class="module-description">
         Gestión de empleados,
-        capacitaciones y reportes.
+        formaciones y reportes.
     </div>
 
 </div>
