@@ -155,7 +155,7 @@ def render_admin():
         ]
     )
 
-    # =========================================================
+        # =========================================================
     # TAB FORMACIÓN
     # =========================================================
 
@@ -163,360 +163,613 @@ def render_admin():
 
         st.subheader("📚 Crear Formación")
 
-        col1, col2 = st.columns(2)
-
-        with col1:
-
-            nombre_formacion = st.text_input(
-                "Nombre capacitación"
-            )
-
-        with col2:
-
-            fecha = st.date_input(
-                "Fecha asistencia"
-            )
-
-        formador = st.text_input(
-            "Formador",
-            value="Eduardo Florez"
-        )
-
-        # =====================================================
-        # TIPO REGISTRO
-        # =====================================================
-
-        tipo_registro = st.radio(
-            "Tipo de registro",
+        subtab_crear_formacion, subtab_consultar_formacion = st.tabs(
             [
-                "Charla",
-                "Capacitación"
-            ],
-            horizontal=True
+                "➕ Crear",
+                "🔎 Consultar / Editar"
+            ]
         )
 
         # =====================================================
-        # VARIABLES PREGUNTAS
+        # SUBTAB CREAR
         # =====================================================
 
-        pregunta_1 = None
-        pregunta_2 = None
-        pregunta_3 = None
-        pregunta_4 = None
-        pregunta_5 = None
+        with subtab_crear_formacion:
 
-        p1_opcion_a = None
-        p1_opcion_b = None
-        p1_opcion_c = None
-        p1_opcion_d = None
-        p1_correcta = None
+            col1, col2 = st.columns(2)
 
-        p2_opcion_a = None
-        p2_opcion_b = None
-        p2_opcion_c = None
-        p2_opcion_d = None
-        p2_correcta = None
+            with col1:
 
-        p3_opcion_a = None
-        p3_opcion_b = None
-        p3_opcion_c = None
-        p3_opcion_d = None
-        p3_correcta = None
+                nombre_formacion = st.text_input(
+                    "Nombre capacitación"
+                )
 
-        p4_opcion_a = None
-        p4_opcion_b = None
-        p4_opcion_c = None
-        p4_opcion_d = None
-        p4_correcta = None
+            with col2:
 
-        p5_opcion_a = None
-        p5_opcion_b = None
-        p5_opcion_c = None
-        p5_opcion_d = None
-        p5_correcta = None
+                fecha = st.date_input(
+                    "Fecha asistencia"
+                )
+
+            formador = st.text_input(
+                "Formador",
+                value="Eduardo Florez"
+            )
+
+            # =====================================================
+            # TIPO REGISTRO
+            # =====================================================
+
+            tipo_registro = st.radio(
+                "Tipo de registro",
+                [
+                    "Charla",
+                    "Capacitación"
+                ],
+                horizontal=True
+            )
+
+            # =====================================================
+            # VARIABLES PREGUNTAS
+            # =====================================================
+
+            pregunta_1 = None
+            pregunta_2 = None
+            pregunta_3 = None
+            pregunta_4 = None
+            pregunta_5 = None
+
+            p1_opcion_a = None
+            p1_opcion_b = None
+            p1_opcion_c = None
+            p1_opcion_d = None
+            p1_correcta = None
+
+            p2_opcion_a = None
+            p2_opcion_b = None
+            p2_opcion_c = None
+            p2_opcion_d = None
+            p2_correcta = None
+
+            p3_opcion_a = None
+            p3_opcion_b = None
+            p3_opcion_c = None
+            p3_opcion_d = None
+            p3_correcta = None
+
+            p4_opcion_a = None
+            p4_opcion_b = None
+            p4_opcion_c = None
+            p4_opcion_d = None
+            p4_correcta = None
+
+            p5_opcion_a = None
+            p5_opcion_b = None
+            p5_opcion_c = None
+            p5_opcion_d = None
+            p5_correcta = None
+
+            # =====================================================
+            # PREGUNTAS CAPACITACIÓN
+            # =====================================================
+
+            if tipo_registro == "Capacitación":
+
+                st.markdown("### 📝 Preguntas de evaluación")
+
+                for i in range(1, 6):
+
+                    with st.expander(
+                        f"Pregunta {i}",
+                        expanded=(i == 1)
+                    ):
+
+                        globals()[f"pregunta_{i}"] = st.text_input(
+                            f"Texto pregunta {i}",
+                            key=f"crear_pregunta_{i}"
+                        )
+
+                        col_a, col_b = st.columns(2)
+
+                        with col_a:
+
+                            globals()[f"p{i}_opcion_a"] = st.text_input(
+                                f"Pregunta {i} - Opción A",
+                                key=f"crear_p{i}a"
+                            )
+
+                            globals()[f"p{i}_opcion_b"] = st.text_input(
+                                f"Pregunta {i} - Opción B",
+                                key=f"crear_p{i}b"
+                            )
+
+                        with col_b:
+
+                            globals()[f"p{i}_opcion_c"] = st.text_input(
+                                f"Pregunta {i} - Opción C",
+                                key=f"crear_p{i}c"
+                            )
+
+                            globals()[f"p{i}_opcion_d"] = st.text_input(
+                                f"Pregunta {i} - Opción D",
+                                key=f"crear_p{i}d"
+                            )
+
+                        globals()[f"p{i}_correcta"] = st.radio(
+                            f"Respuesta correcta pregunta {i}",
+                            ["A", "B", "C", "D"],
+                            horizontal=True,
+                            key=f"crear_correcta_{i}"
+                        )
+
+            # =====================================================
+            # CREAR FORMACIÓN
+            # =====================================================
+
+            if st.button(
+                "Crear formación",
+                use_container_width=True
+            ):
+
+                if not nombre_formacion:
+
+                    st.warning(
+                        "⚠️ Debe ingresar el nombre"
+                    )
+
+                elif (
+                    tipo_registro == "Capacitación"
+                    and
+                    not globals()["pregunta_1"]
+                ):
+
+                    st.warning(
+                        "⚠️ Para una capacitación debe ingresar al menos la pregunta 1."
+                    )
+
+                else:
+
+                    try:
+
+                        with engine.begin() as conn:
+
+                            resultado = conn.execute(
+                                text("""
+                                    INSERT INTO formaciones (
+                                        nombre_formacion,
+                                        fecha_asistencia,
+                                        formador,
+                                        tipo_registro,
+
+                                        pregunta_1,
+                                        pregunta_2,
+                                        pregunta_3,
+                                        pregunta_4,
+                                        pregunta_5,
+
+                                        p1_opcion_a,
+                                        p1_opcion_b,
+                                        p1_opcion_c,
+                                        p1_opcion_d,
+                                        p1_correcta,
+
+                                        p2_opcion_a,
+                                        p2_opcion_b,
+                                        p2_opcion_c,
+                                        p2_opcion_d,
+                                        p2_correcta,
+
+                                        p3_opcion_a,
+                                        p3_opcion_b,
+                                        p3_opcion_c,
+                                        p3_opcion_d,
+                                        p3_correcta,
+
+                                        p4_opcion_a,
+                                        p4_opcion_b,
+                                        p4_opcion_c,
+                                        p4_opcion_d,
+                                        p4_correcta,
+
+                                        p5_opcion_a,
+                                        p5_opcion_b,
+                                        p5_opcion_c,
+                                        p5_opcion_d,
+                                        p5_correcta
+                                    )
+                                    VALUES (
+                                        :nombre_formacion,
+                                        :fecha_asistencia,
+                                        :formador,
+                                        :tipo_registro,
+
+                                        :pregunta_1,
+                                        :pregunta_2,
+                                        :pregunta_3,
+                                        :pregunta_4,
+                                        :pregunta_5,
+
+                                        :p1_opcion_a,
+                                        :p1_opcion_b,
+                                        :p1_opcion_c,
+                                        :p1_opcion_d,
+                                        :p1_correcta,
+
+                                        :p2_opcion_a,
+                                        :p2_opcion_b,
+                                        :p2_opcion_c,
+                                        :p2_opcion_d,
+                                        :p2_correcta,
+
+                                        :p3_opcion_a,
+                                        :p3_opcion_b,
+                                        :p3_opcion_c,
+                                        :p3_opcion_d,
+                                        :p3_correcta,
+
+                                        :p4_opcion_a,
+                                        :p4_opcion_b,
+                                        :p4_opcion_c,
+                                        :p4_opcion_d,
+                                        :p4_correcta,
+
+                                        :p5_opcion_a,
+                                        :p5_opcion_b,
+                                        :p5_opcion_c,
+                                        :p5_opcion_d,
+                                        :p5_correcta
+                                    )
+                                    RETURNING id
+                                """),
+                                {
+                                    "nombre_formacion": nombre_formacion.strip(),
+                                    "fecha_asistencia": fecha,
+                                    "formador": formador.strip(),
+                                    "tipo_registro": tipo_registro,
+
+                                    **{
+                                        f"pregunta_{i}": globals()[f"pregunta_{i}"]
+                                        for i in range(1, 6)
+                                    },
+
+                                    **{
+                                        f"p{i}_opcion_a": globals()[f"p{i}_opcion_a"]
+                                        for i in range(1, 6)
+                                    },
+
+                                    **{
+                                        f"p{i}_opcion_b": globals()[f"p{i}_opcion_b"]
+                                        for i in range(1, 6)
+                                    },
+
+                                    **{
+                                        f"p{i}_opcion_c": globals()[f"p{i}_opcion_c"]
+                                        for i in range(1, 6)
+                                    },
+
+                                    **{
+                                        f"p{i}_opcion_d": globals()[f"p{i}_opcion_d"]
+                                        for i in range(1, 6)
+                                    },
+
+                                    **{
+                                        f"p{i}_correcta": globals()[f"p{i}_correcta"]
+                                        for i in range(1, 6)
+                                    }
+                                }
+                            )
+
+                            id_formacion = resultado.fetchone()[0]
+
+                        url = (
+                            f"https://elite-sst.streamlit.app/"
+                            f"?view=asistencia&formacion={id_formacion}"
+                        )
+
+                        st.success(
+                            "✅ Formación creada correctamente"
+                        )
+
+                        st.code(url)
+
+                    except Exception as e:
+
+                        st.error(
+                            f"❌ Error: {e}"
+                        )
 
         # =====================================================
-        # PREGUNTAS CAPACITACIÓN
+        # SUBTAB CONSULTAR / EDITAR
         # =====================================================
 
-        if tipo_registro == "Capacitación":
+        with subtab_consultar_formacion:
 
-            st.markdown("### 📝 Preguntas de evaluación")
+            st.subheader(
+                "🔎 Consultar / Editar Formación"
+            )
 
-            with st.expander("Pregunta 1", expanded=True):
+            with engine.begin() as conn:
 
-                pregunta_1 = st.text_input("Texto pregunta 1")
-
-                col_a, col_b = st.columns(2)
-
-                with col_a:
-
-                    p1_opcion_a = st.text_input("Pregunta 1 - Opción A")
-                    p1_opcion_b = st.text_input("Pregunta 1 - Opción B")
-
-                with col_b:
-
-                    p1_opcion_c = st.text_input("Pregunta 1 - Opción C")
-                    p1_opcion_d = st.text_input("Pregunta 1 - Opción D")
-
-                p1_correcta = st.radio(
-                    "Respuesta correcta pregunta 1",
-                    ["A", "B", "C", "D"],
-                    horizontal=True,
-                    key="p1_correcta"
+                df_historial = pd.read_sql(
+                    text("""
+                        SELECT
+                            id,
+                            fecha_asistencia,
+                            nombre_formacion,
+                            tipo_registro,
+                            formador
+                        FROM formaciones
+                        ORDER BY id DESC
+                    """),
+                    conn
                 )
 
-            with st.expander("Pregunta 2"):
-
-                pregunta_2 = st.text_input("Texto pregunta 2")
-
-                col_a, col_b = st.columns(2)
-
-                with col_a:
-
-                    p2_opcion_a = st.text_input("Pregunta 2 - Opción A")
-                    p2_opcion_b = st.text_input("Pregunta 2 - Opción B")
-
-                with col_b:
-
-                    p2_opcion_c = st.text_input("Pregunta 2 - Opción C")
-                    p2_opcion_d = st.text_input("Pregunta 2 - Opción D")
-
-                p2_correcta = st.radio(
-                    "Respuesta correcta pregunta 2",
-                    ["A", "B", "C", "D"],
-                    horizontal=True,
-                    key="p2_correcta"
-                )
-
-            with st.expander("Pregunta 3"):
-
-                pregunta_3 = st.text_input("Texto pregunta 3")
-
-                col_a, col_b = st.columns(2)
-
-                with col_a:
-
-                    p3_opcion_a = st.text_input("Pregunta 3 - Opción A")
-                    p3_opcion_b = st.text_input("Pregunta 3 - Opción B")
-
-                with col_b:
-
-                    p3_opcion_c = st.text_input("Pregunta 3 - Opción C")
-                    p3_opcion_d = st.text_input("Pregunta 3 - Opción D")
-
-                p3_correcta = st.radio(
-                    "Respuesta correcta pregunta 3",
-                    ["A", "B", "C", "D"],
-                    horizontal=True,
-                    key="p3_correcta"
-                )
-
-            with st.expander("Pregunta 4"):
-
-                pregunta_4 = st.text_input("Texto pregunta 4")
-
-                col_a, col_b = st.columns(2)
-
-                with col_a:
-
-                    p4_opcion_a = st.text_input("Pregunta 4 - Opción A")
-                    p4_opcion_b = st.text_input("Pregunta 4 - Opción B")
-
-                with col_b:
-
-                    p4_opcion_c = st.text_input("Pregunta 4 - Opción C")
-                    p4_opcion_d = st.text_input("Pregunta 4 - Opción D")
-
-                p4_correcta = st.radio(
-                    "Respuesta correcta pregunta 4",
-                    ["A", "B", "C", "D"],
-                    horizontal=True,
-                    key="p4_correcta"
-                )
-
-            with st.expander("Pregunta 5"):
-
-                pregunta_5 = st.text_input("Texto pregunta 5")
-
-                col_a, col_b = st.columns(2)
-
-                with col_a:
-
-                    p5_opcion_a = st.text_input("Pregunta 5 - Opción A")
-                    p5_opcion_b = st.text_input("Pregunta 5 - Opción B")
-
-                with col_b:
-
-                    p5_opcion_c = st.text_input("Pregunta 5 - Opción C")
-                    p5_opcion_d = st.text_input("Pregunta 5 - Opción D")
-
-                p5_correcta = st.radio(
-                    "Respuesta correcta pregunta 5",
-                    ["A", "B", "C", "D"],
-                    horizontal=True,
-                    key="p5_correcta"
-                )
-
-        # =====================================================
-        # CREAR FORMACIÓN
-        # =====================================================
-
-        if st.button(
-            "Crear formación",
-            use_container_width=True
-        ):
-
-            if not nombre_formacion:
+            if df_historial.empty:
 
                 st.warning(
-                    "⚠️ Debe ingresar el nombre"
-                )
-
-            elif tipo_registro == "Capacitación" and not pregunta_1:
-
-                st.warning(
-                    "⚠️ Para una capacitación debe ingresar al menos la pregunta 1."
+                    "⚠️ No existen formaciones registradas."
                 )
 
             else:
 
-                try:
+                df_historial["url"] = (
+                    "https://elite-sst.streamlit.app/"
+                    "?view=asistencia&formacion="
+                    + df_historial["id"].astype(str)
+                )
 
-                    with engine.begin() as conn:
+                st.dataframe(
+                    df_historial,
+                    use_container_width=True
+                )
 
-                        resultado = conn.execute(
-                            text("""
-                                INSERT INTO formaciones (
-                                    nombre_formacion,
-                                    fecha_asistencia,
-                                    formador,
-                                    tipo_registro,
-                                    pregunta_1,
-                                    pregunta_2,
-                                    pregunta_3,
-                                    pregunta_4,
-                                    pregunta_5,
-                                    p1_opcion_a,
-                                    p1_opcion_b,
-                                    p1_opcion_c,
-                                    p1_opcion_d,
-                                    p1_correcta,
-                                    p2_opcion_a,
-                                    p2_opcion_b,
-                                    p2_opcion_c,
-                                    p2_opcion_d,
-                                    p2_correcta,
-                                    p3_opcion_a,
-                                    p3_opcion_b,
-                                    p3_opcion_c,
-                                    p3_opcion_d,
-                                    p3_correcta,
-                                    p4_opcion_a,
-                                    p4_opcion_b,
-                                    p4_opcion_c,
-                                    p4_opcion_d,
-                                    p4_correcta,
-                                    p5_opcion_a,
-                                    p5_opcion_b,
-                                    p5_opcion_c,
-                                    p5_opcion_d,
-                                    p5_correcta
-                                )
-                                VALUES (
-                                    :nombre_formacion,
-                                    :fecha_asistencia,
-                                    :formador,
-                                    :tipo_registro,
-                                    :pregunta_1,
-                                    :pregunta_2,
-                                    :pregunta_3,
-                                    :pregunta_4,
-                                    :pregunta_5,
-                                    :p1_opcion_a,
-                                    :p1_opcion_b,
-                                    :p1_opcion_c,
-                                    :p1_opcion_d,
-                                    :p1_correcta,
-                                    :p2_opcion_a,
-                                    :p2_opcion_b,
-                                    :p2_opcion_c,
-                                    :p2_opcion_d,
-                                    :p2_correcta,
-                                    :p3_opcion_a,
-                                    :p3_opcion_b,
-                                    :p3_opcion_c,
-                                    :p3_opcion_d,
-                                    :p3_correcta,
-                                    :p4_opcion_a,
-                                    :p4_opcion_b,
-                                    :p4_opcion_c,
-                                    :p4_opcion_d,
-                                    :p4_correcta,
-                                    :p5_opcion_a,
-                                    :p5_opcion_b,
-                                    :p5_opcion_c,
-                                    :p5_opcion_d,
-                                    :p5_correcta
-                                )
-                                RETURNING id
-                            """),
-                            {
-                                "nombre_formacion": nombre_formacion.strip(),
-                                "fecha_asistencia": fecha,
-                                "formador": formador.strip(),
-                                "tipo_registro": tipo_registro,
-                                "pregunta_1": pregunta_1,
-                                "pregunta_2": pregunta_2,
-                                "pregunta_3": pregunta_3,
-                                "pregunta_4": pregunta_4,
-                                "pregunta_5": pregunta_5,
-                                "p1_opcion_a": p1_opcion_a,
-                                "p1_opcion_b": p1_opcion_b,
-                                "p1_opcion_c": p1_opcion_c,
-                                "p1_opcion_d": p1_opcion_d,
-                                "p1_correcta": p1_correcta,
-                                "p2_opcion_a": p2_opcion_a,
-                                "p2_opcion_b": p2_opcion_b,
-                                "p2_opcion_c": p2_opcion_c,
-                                "p2_opcion_d": p2_opcion_d,
-                                "p2_correcta": p2_correcta,
-                                "p3_opcion_a": p3_opcion_a,
-                                "p3_opcion_b": p3_opcion_b,
-                                "p3_opcion_c": p3_opcion_c,
-                                "p3_opcion_d": p3_opcion_d,
-                                "p3_correcta": p3_correcta,
-                                "p4_opcion_a": p4_opcion_a,
-                                "p4_opcion_b": p4_opcion_b,
-                                "p4_opcion_c": p4_opcion_c,
-                                "p4_opcion_d": p4_opcion_d,
-                                "p4_correcta": p4_correcta,
-                                "p5_opcion_a": p5_opcion_a,
-                                "p5_opcion_b": p5_opcion_b,
-                                "p5_opcion_c": p5_opcion_c,
-                                "p5_opcion_d": p5_opcion_d,
-                                "p5_correcta": p5_correcta
-                            }
+                opciones_formacion = {
+                    f"{row.id} - {row.nombre_formacion}": row.id
+                    for row in df_historial.itertuples()
+                }
+
+                seleccion_formacion = st.selectbox(
+                    "Seleccione formación para editar",
+                    list(opciones_formacion.keys()),
+                    key="editar_formacion"
+                )
+
+                id_formacion_editar = opciones_formacion[
+                    seleccion_formacion
+                ]
+
+                url_formacion = (
+                    "https://elite-sst.streamlit.app/"
+                    f"?view=asistencia&formacion={id_formacion_editar}"
+                )
+
+                st.code(url_formacion)
+
+                with engine.begin() as conn:
+
+                    formacion = conn.execute(
+                        text("""
+                            SELECT *
+                            FROM formaciones
+                            WHERE id = :id
+                        """),
+                        {
+                            "id": id_formacion_editar
+                        }
+                    ).mappings().first()
+
+                if formacion:
+
+                    st.markdown("---")
+
+                    nombre_edit = st.text_input(
+                        "Nombre formación",
+                        value=formacion["nombre_formacion"] or "",
+                        key="edit_nombre"
+                    )
+
+                    fecha_edit = st.date_input(
+                        "Fecha asistencia",
+                        value=formacion["fecha_asistencia"],
+                        key="edit_fecha"
+                    )
+
+                    formador_edit = st.text_input(
+                        "Formador",
+                        value=formacion["formador"] or "",
+                        key="edit_formador"
+                    )
+
+                    tipo_edit = st.radio(
+                        "Tipo de registro",
+                        [
+                            "Charla",
+                            "Capacitación"
+                        ],
+                        horizontal=True,
+                        index=0 if formacion["tipo_registro"] == "Charla" else 1,
+                        key="edit_tipo"
+                    )
+
+                    # =================================================
+                    # PREGUNTAS
+                    # =================================================
+
+                    preguntas_edit = {}
+
+                    if tipo_edit == "Capacitación":
+
+                        st.markdown(
+                            "### 📝 Preguntas de evaluación"
                         )
 
-                        id_formacion = resultado.fetchone()[0]
+                        for i in range(1, 6):
 
-                    url = (
-                        f"https://elite-sst.streamlit.app/"
-                        f"?view=asistencia&formacion={id_formacion}"
-                    )
+                            with st.expander(
+                                f"Pregunta {i}",
+                                expanded=(i == 1)
+                            ):
 
-                    st.success(
-                        "✅ Formación creada correctamente"
-                    )
+                                pregunta = st.text_input(
+                                    f"Texto pregunta {i}",
+                                    value=formacion[f"pregunta_{i}"] or "",
+                                    key=f"edit_pregunta_{i}"
+                                )
 
-                    st.code(url)
+                                col_a, col_b = st.columns(2)
 
-                except Exception as e:
+                                with col_a:
 
-                    st.error(
-                        f"❌ Error: {e}"
-                    )
+                                    opcion_a = st.text_input(
+                                        f"Pregunta {i} - Opción A",
+                                        value=formacion[f"p{i}_opcion_a"] or "",
+                                        key=f"edit_p{i}a"
+                                    )
+
+                                    opcion_b = st.text_input(
+                                        f"Pregunta {i} - Opción B",
+                                        value=formacion[f"p{i}_opcion_b"] or "",
+                                        key=f"edit_p{i}b"
+                                    )
+
+                                with col_b:
+
+                                    opcion_c = st.text_input(
+                                        f"Pregunta {i} - Opción C",
+                                        value=formacion[f"p{i}_opcion_c"] or "",
+                                        key=f"edit_p{i}c"
+                                    )
+
+                                    opcion_d = st.text_input(
+                                        f"Pregunta {i} - Opción D",
+                                        value=formacion[f"p{i}_opcion_d"] or "",
+                                        key=f"edit_p{i}d"
+                                    )
+
+                                correcta = st.radio(
+                                    f"Respuesta correcta pregunta {i}",
+                                    ["A", "B", "C", "D"],
+                                    horizontal=True,
+                                    index=["A", "B", "C", "D"].index(
+                                        formacion[f"p{i}_correcta"]
+                                        if formacion[f"p{i}_correcta"]
+                                        else "A"
+                                    ),
+                                    key=f"edit_correcta_{i}"
+                                )
+
+                                preguntas_edit[i] = {
+                                    "pregunta": pregunta,
+                                    "a": opcion_a,
+                                    "b": opcion_b,
+                                    "c": opcion_c,
+                                    "d": opcion_d,
+                                    "correcta": correcta
+                                }
+
+                    # =================================================
+                    # BOTÓN GUARDAR
+                    # =================================================
+
+                    if st.button(
+                        "💾 Guardar Cambios",
+                        use_container_width=True,
+                        key="guardar_cambios_formacion"
+                    ):
+
+                        try:
+
+                            valores = {
+                                "id": id_formacion_editar,
+                                "nombre_formacion": nombre_edit,
+                                "fecha_asistencia": fecha_edit,
+                                "formador": formador_edit,
+                                "tipo_registro": tipo_edit
+                            }
+
+                            for i in range(1, 6):
+
+                                if tipo_edit == "Capacitación":
+
+                                    valores[f"pregunta_{i}"] = preguntas_edit[i]["pregunta"]
+                                    valores[f"p{i}_a"] = preguntas_edit[i]["a"]
+                                    valores[f"p{i}_b"] = preguntas_edit[i]["b"]
+                                    valores[f"p{i}_c"] = preguntas_edit[i]["c"]
+                                    valores[f"p{i}_d"] = preguntas_edit[i]["d"]
+                                    valores[f"p{i}_correcta"] = preguntas_edit[i]["correcta"]
+
+                                else:
+
+                                    valores[f"pregunta_{i}"] = None
+                                    valores[f"p{i}_a"] = None
+                                    valores[f"p{i}_b"] = None
+                                    valores[f"p{i}_c"] = None
+                                    valores[f"p{i}_d"] = None
+                                    valores[f"p{i}_correcta"] = None
+
+                            with engine.begin() as conn:
+
+                                conn.execute(
+                                    text("""
+                                        UPDATE formaciones
+                                        SET
+
+                                            nombre_formacion = :nombre_formacion,
+                                            fecha_asistencia = :fecha_asistencia,
+                                            formador = :formador,
+                                            tipo_registro = :tipo_registro,
+
+                                            pregunta_1 = :pregunta_1,
+                                            pregunta_2 = :pregunta_2,
+                                            pregunta_3 = :pregunta_3,
+                                            pregunta_4 = :pregunta_4,
+                                            pregunta_5 = :pregunta_5,
+
+                                            p1_opcion_a = :p1_a,
+                                            p1_opcion_b = :p1_b,
+                                            p1_opcion_c = :p1_c,
+                                            p1_opcion_d = :p1_d,
+                                            p1_correcta = :p1_correcta,
+
+                                            p2_opcion_a = :p2_a,
+                                            p2_opcion_b = :p2_b,
+                                            p2_opcion_c = :p2_c,
+                                            p2_opcion_d = :p2_d,
+                                            p2_correcta = :p2_correcta,
+
+                                            p3_opcion_a = :p3_a,
+                                            p3_opcion_b = :p3_b,
+                                            p3_opcion_c = :p3_c,
+                                            p3_opcion_d = :p3_d,
+                                            p3_correcta = :p3_correcta,
+
+                                            p4_opcion_a = :p4_a,
+                                            p4_opcion_b = :p4_b,
+                                            p4_opcion_c = :p4_c,
+                                            p4_opcion_d = :p4_d,
+                                            p4_correcta = :p4_correcta,
+
+                                            p5_opcion_a = :p5_a,
+                                            p5_opcion_b = :p5_b,
+                                            p5_opcion_c = :p5_c,
+                                            p5_opcion_d = :p5_d,
+                                            p5_correcta = :p5_correcta
+
+                                        WHERE id = :id
+                                    """),
+                                    valores
+                                )
+
+                            st.success(
+                                "✅ Formación actualizada correctamente"
+                            )
+
+                            st.rerun()
+
+                        except Exception as e:
+
+                            st.error(
+                                f"❌ Error actualizando: {e}"
+                            )
 
     # =========================================================
     # TAB EMPLEADOS
