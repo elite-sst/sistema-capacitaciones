@@ -450,7 +450,20 @@ def render_asistencia():
 
     if tipo_registro == "Capacitación":
 
-        st.markdown("### 📝 Evaluación de la capacitación")
+        st.markdown(
+            """
+            <div style="
+                font-size:20px;
+                font-weight:700;
+                margin-top:15px;
+                margin-bottom:10px;
+                color:#1e293b;
+            ">
+                📝 Evaluación de la capacitación
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
         for item in preguntas:
 
