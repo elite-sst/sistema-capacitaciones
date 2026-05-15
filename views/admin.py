@@ -163,10 +163,11 @@ def render_admin():
 
         st.subheader("📚 Crear Formación")
 
-        subtab_crear_formacion, subtab_consultar_formacion = st.tabs(
+        subtab_crear_formacion, subtab_consultar_formacion, subtab_consolidado_formacion = st.tabs(
             [
                 "➕ Crear",
-                "🔎 Consultar / Editar"
+                "🔎 Consultar / Editar",
+                "📆 Consolidado Mensual"
             ]
         )
 
@@ -770,7 +771,254 @@ def render_admin():
                             st.error(
                                 f"❌ Error actualizando: {e}"
                             )
+        with subtab_consolidado_formacion:
 
+            st.subheader("📆 Consolidado Mensual")
+
+            col1, col2 = st.columns(2)
+
+            with col1:
+                fecha_inicio = st.date_input(
+                    "Fecha inicial",
+                    key="fecha_inicio_consolidado"
+                )
+
+            with col2:
+                fecha_fin = st.date_input(
+                    "Fecha final",
+                    key="fecha_fin_consolidado"
+                )
+
+            with engine.begin() as conn:
+
+                df_consolidado = pd.read_sql(
+                    text("""
+                        SELECT
+                            f.id AS id_formacion,
+                            f.fecha_asistencia,
+                            f.nombre_formacion,
+                            f.tipo_registro,
+                            f.formador,
+                            a.cedula,
+                            a.nombre_completo,
+                            a.cargo,
+                            a.proyecto,
+                            a.zona,
+                            a.clasificacion_formacion,
+                            a.tipo_formacion,
+                            a.autoriza_datos,
+                            a.respuesta_1,
+                            a.resultado_1,
+                            a.respuesta_2,
+                            a.resultado_2,
+                            a.respuesta_3,
+                            a.resultado_3,
+                            a.respuesta_4,
+                            a.resultado_4,
+                            a.respuesta_5,
+                            a.resultado_5,
+                            a.puntaje,
+                            a.fecha_registro
+                        FROM formaciones f
+                        LEFT JOIN asistencias a
+                            ON a.id_formacion = f.id
+                        WHERE f.fecha_asistencia BETWEEN :fecha_inicio AND :fecha_fin
+                        ORDER BY
+                            f.fecha_asistencia DESC,
+                            f.id DESC,
+                            a.fecha_registro DESC
+                    """),
+                    conn,
+                    params={
+                        "fecha_inicio": fecha_inicio,
+                        "fecha_fin": fecha_fin
+                    }
+                )
+
+            if df_consolidado.empty:
+
+                st.warning(
+                    "⚠️ No hay formaciones registradas en ese rango."
+                )
+
+            else:
+
+                df_resumen = (
+                    df_consolidado
+                    .groupby(
+                        [
+                            "id_formacion",
+                            "fecha_asistencia",
+                            "nombre_formacion",
+                            "tipo_registro",
+                            "formador"
+                        ],
+                        dropna=False
+                    )
+                    .agg(
+                        total_asistencias=("cedula", "count")
+                    )
+                    .reset_index()
+                )
+
+                st.dataframe(
+                    df_resumen,
+                    use_container_width=True
+                )
+
+                opciones_consolidado = {
+                    f"{row.id_formacion} - {row.nombre_formacion}": row.id_formacion
+                    for row in df_resumen.itertuples()
+                }
+
+                seleccion_consolidado = st.selectbox(
+                    "Seleccione formación para ver detalle",
+                    list(opciones_consolidado.keys()),
+                    key="select_consolidado"
+                )
+
+                id_consolidado = opciones_consolidado[seleccion_consolidado]
+
+                fila_detalle = df_resumen[
+                    df_resumen["id_formacion"] == id_consolidado
+                ].iloc[0]
+
+                st.markdown("---")
+                st.markdown("### 📌 Detalle de la formación")
+
+                col1, col2, col3, col4 = st.columns(4)
+
+                with col1:
+                    st.metric("ID", fila_detalle["id_formacion"])
+
+                with col2:
+                    st.metric("Tipo", fila_detalle["tipo_registro"])
+
+                with col3:
+                    st.metric("Fecha", str(fila_detalle["fecha_asistencia"]))
+
+                with col4:
+                    st.metric("Asistencias", int(fila_detalle["total_asistencias"]))
+
+                st.write(
+                    f"**Nombre:** {fila_detalle['nombre_formacion']}"
+                )
+
+                st.write(
+                    f"**Formador:** {fila_detalle['formador']}"
+                )
+
+                # =====================================================
+                # EXPORTAR CONSOLIDADO EXCEL PRO
+                # =====================================================
+
+                output = BytesIO()
+
+                with pd.ExcelWriter(
+                    output,
+                    engine="openpyxl"
+                ) as writer:
+
+                    df_resumen.to_excel(
+                        writer,
+                        index=False,
+                        sheet_name="Resumen_Formaciones"
+                    )
+
+                    df_consolidado.to_excel(
+                        writer,
+                        index=False,
+                        sheet_name="Detalle_Asistencias"
+                    )
+
+                    for sheet_name in [
+                        "Resumen_Formaciones",
+                        "Detalle_Asistencias"
+                    ]:
+
+                        worksheet = writer.sheets[sheet_name]
+
+                        # Encabezado verde corporativo
+                        for cell in worksheet[1]:
+
+                            cell.font = Font(
+                                bold=True,
+                                color="FFFFFF"
+                            )
+
+                            cell.alignment = Alignment(
+                                horizontal="center",
+                                vertical="center"
+                            )
+
+                            cell.fill = PatternFill(
+                                start_color="166534",
+                                end_color="166534",
+                                fill_type="solid"
+                            )
+
+                        # Ajustar ancho de columnas
+                        for column_cells in worksheet.columns:
+
+                            length = max(
+                                len(str(cell.value))
+                                if cell.value else 0
+                                for cell in column_cells
+                            )
+
+                            worksheet.column_dimensions[
+                                get_column_letter(
+                                    column_cells[0].column
+                                )
+                            ].width = length + 5
+
+                        # Crear tabla estructurada Excel
+                        total_filas = worksheet.max_row
+                        total_columnas = worksheet.max_column
+
+                        rango = (
+                            f"A1:"
+                            f"{get_column_letter(total_columnas)}"
+                            f"{total_filas}"
+                        )
+
+                        nombre_tabla = (
+                            "TablaResumenFormaciones"
+                            if sheet_name == "Resumen_Formaciones"
+                            else "TablaDetalleAsistencias"
+                        )
+
+                        tabla = Table(
+                            displayName=nombre_tabla,
+                            ref=rango
+                        )
+
+                        estilo = TableStyleInfo(
+                            name="TableStyleMedium9",
+                            showRowStripes=True,
+                            showColumnStripes=False
+                        )
+
+                        tabla.tableStyleInfo = estilo
+
+                        worksheet.add_table(tabla)
+
+                output.seek(0)
+
+                st.download_button(
+                    label="📥 Descargar consolidado mensual Excel",
+                    data=output,
+                    file_name=(
+                        f"Consolidado_Formaciones_"
+                        f"{fecha_inicio}_{fecha_fin}.xlsx"
+                    ),
+                    mime=(
+                        "application/vnd.openxmlformats-"
+                        "officedocument.spreadsheetml.sheet"
+                    ),
+                    use_container_width=True
+                )
+    
     # =========================================================
     # TAB EMPLEADOS
     # =========================================================
