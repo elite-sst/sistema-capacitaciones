@@ -478,15 +478,14 @@ def render_admin():
                             f"❌ Error: {e}"
                         )
 
+
         # =====================================================
         # SUBTAB CONSULTAR / EDITAR
         # =====================================================
 
         with subtab_consultar_formacion:
 
-            st.subheader(
-                "🔎 Consultar / Editar Formación"
-            )
+            st.subheader("🔎 Consultar / Editar Formación")
 
             with engine.begin() as conn:
 
@@ -506,9 +505,7 @@ def render_admin():
 
             if df_historial.empty:
 
-                st.warning(
-                    "⚠️ No existen formaciones registradas."
-                )
+                st.warning("⚠️ No existen formaciones registradas.")
 
             else:
 
@@ -531,7 +528,7 @@ def render_admin():
                 seleccion_formacion = st.selectbox(
                     "Seleccione formación para editar",
                     list(opciones_formacion.keys()),
-                    key="editar_formacion"
+                    key="editar_formacion_select"
                 )
 
                 id_formacion_editar = opciones_formacion[
@@ -565,19 +562,19 @@ def render_admin():
                     nombre_edit = st.text_input(
                         "Nombre formación",
                         value=formacion["nombre_formacion"] or "",
-                        key="edit_nombre"
+                        key=f"edit_nombre_{id_formacion_editar}"
                     )
 
                     fecha_edit = st.date_input(
                         "Fecha asistencia",
                         value=formacion["fecha_asistencia"],
-                        key="edit_fecha"
+                        key=f"edit_fecha_{id_formacion_editar}"
                     )
 
                     formador_edit = st.text_input(
                         "Formador",
                         value=formacion["formador"] or "",
-                        key="edit_formador"
+                        key=f"edit_formador_{id_formacion_editar}"
                     )
 
                     tipo_edit = st.radio(
@@ -588,22 +585,22 @@ def render_admin():
                         ],
                         horizontal=True,
                         index=0 if formacion["tipo_registro"] == "Charla" else 1,
-                        key="edit_tipo"
+                        key=f"edit_tipo_{id_formacion_editar}"
                     )
-
-                    # =================================================
-                    # PREGUNTAS
-                    # =================================================
 
                     preguntas_edit = {}
 
                     if tipo_edit == "Capacitación":
 
-                        st.markdown(
-                            "### 📝 Preguntas de evaluación"
-                        )
+                        st.markdown("### 📝 Preguntas de evaluación")
 
                         for i in range(1, 6):
+
+                            correcta_actual = (
+                                formacion[f"p{i}_correcta"]
+                                if formacion[f"p{i}_correcta"] in ["A", "B", "C", "D"]
+                                else "A"
+                            )
 
                             with st.expander(
                                 f"Pregunta {i}",
@@ -613,7 +610,7 @@ def render_admin():
                                 pregunta = st.text_input(
                                     f"Texto pregunta {i}",
                                     value=formacion[f"pregunta_{i}"] or "",
-                                    key=f"edit_pregunta_{i}"
+                                    key=f"edit_pregunta_{id_formacion_editar}_{i}"
                                 )
 
                                 col_a, col_b = st.columns(2)
@@ -623,13 +620,13 @@ def render_admin():
                                     opcion_a = st.text_input(
                                         f"Pregunta {i} - Opción A",
                                         value=formacion[f"p{i}_opcion_a"] or "",
-                                        key=f"edit_p{i}a"
+                                        key=f"edit_p{id_formacion_editar}_{i}_a"
                                     )
 
                                     opcion_b = st.text_input(
                                         f"Pregunta {i} - Opción B",
                                         value=formacion[f"p{i}_opcion_b"] or "",
-                                        key=f"edit_p{i}b"
+                                        key=f"edit_p{id_formacion_editar}_{i}_b"
                                     )
 
                                 with col_b:
@@ -637,25 +634,21 @@ def render_admin():
                                     opcion_c = st.text_input(
                                         f"Pregunta {i} - Opción C",
                                         value=formacion[f"p{i}_opcion_c"] or "",
-                                        key=f"edit_p{i}c"
+                                        key=f"edit_p{id_formacion_editar}_{i}_c"
                                     )
 
                                     opcion_d = st.text_input(
                                         f"Pregunta {i} - Opción D",
                                         value=formacion[f"p{i}_opcion_d"] or "",
-                                        key=f"edit_p{i}d"
+                                        key=f"edit_p{id_formacion_editar}_{i}_d"
                                     )
 
                                 correcta = st.radio(
                                     f"Respuesta correcta pregunta {i}",
                                     ["A", "B", "C", "D"],
                                     horizontal=True,
-                                    index=["A", "B", "C", "D"].index(
-                                        formacion[f"p{i}_correcta"]
-                                        if formacion[f"p{i}_correcta"]
-                                        else "A"
-                                    ),
-                                    key=f"edit_correcta_{i}"
+                                    index=["A", "B", "C", "D"].index(correcta_actual),
+                                    key=f"edit_correcta_{id_formacion_editar}_{i}"
                                 )
 
                                 preguntas_edit[i] = {
@@ -667,23 +660,19 @@ def render_admin():
                                     "correcta": correcta
                                 }
 
-                    # =================================================
-                    # BOTÓN GUARDAR
-                    # =================================================
-
                     if st.button(
                         "💾 Guardar Cambios",
                         use_container_width=True,
-                        key="guardar_cambios_formacion"
+                        key=f"guardar_cambios_{id_formacion_editar}"
                     ):
 
                         try:
 
                             valores = {
                                 "id": id_formacion_editar,
-                                "nombre_formacion": nombre_edit,
+                                "nombre_formacion": nombre_edit.strip(),
                                 "fecha_asistencia": fecha_edit,
-                                "formador": formador_edit,
+                                "formador": formador_edit.strip(),
                                 "tipo_registro": tipo_edit
                             }
 
@@ -713,7 +702,6 @@ def render_admin():
                                     text("""
                                         UPDATE formaciones
                                         SET
-
                                             nombre_formacion = :nombre_formacion,
                                             fecha_asistencia = :fecha_asistencia,
                                             formador = :formador,
@@ -760,16 +748,13 @@ def render_admin():
                                     valores
                                 )
 
-                            st.success(
-                                "✅ Formación actualizada correctamente"
-                            )
-
-                            st.rerun()
+                            st.success("✅ Formación actualizada correctamente.")
+                            st.info("🔗 La URL sigue siendo la misma porque depende del ID.")
 
                         except Exception as e:
 
                             st.error(
-                                f"❌ Error actualizando: {e}"
+                                f"❌ Error actualizando formación: {e}"
                             )
         with subtab_consolidado_formacion:
 
