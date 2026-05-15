@@ -1144,6 +1144,20 @@ def render_admin():
         with subtab_estado:
 
             st.markdown("### ⚙️ Activar / Inactivar Empleado")
+           
+            if "mensaje_estado_empleado" in st.session_state:
+
+                tipo_mensaje, texto_mensaje = st.session_state["mensaje_estado_empleado"]
+
+                if tipo_mensaje == "success":
+
+                    st.success(texto_mensaje)
+
+                elif tipo_mensaje == "warning":
+
+                    st.warning(texto_mensaje)
+
+                del st.session_state["mensaje_estado_empleado"]
 
             buscar_estado = st.text_input(
                 "Buscar por cédula o nombre",
@@ -1272,19 +1286,18 @@ def render_admin():
 
                         if estado_nuevo == "ACTIVO":
 
-                            st.success(
+                            st.session_state["mensaje_estado_empleado"] = (
+                                "success",
                                 "✅ El empleado se ha activado correctamente."
                             )
 
                         else:
 
-                            st.warning(
+                            st.session_state["mensaje_estado_empleado"] = (
+                                "warning",
                                 "⚠️ El empleado se ha inactivado correctamente. Ya no podrá registrar asistencias."
                             )
-                        st.info(
-                            "Si queda INACTIVO, no podrá registrar nuevas asistencias."
-                        )
-
+                        
                         st.rerun()
 
                     except Exception as e:
