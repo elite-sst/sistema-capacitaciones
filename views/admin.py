@@ -479,6 +479,7 @@ def render_admin():
                         )
 
 
+
         # =====================================================
         # SUBTAB CONSULTAR / EDITAR
         # =====================================================
@@ -1012,10 +1013,11 @@ def render_admin():
 
         st.subheader("👥 Gestión Empleados")
 
-        subtab_agregar, subtab_consultar = st.tabs(
+        subtab_agregar, subtab_consultar, subtab_estado = st.tabs(
             [
                 "➕ Agregar",
-                "🔎 Consultar"
+                "🔎 Consultar",
+                "⚙️ Activar / Inactivar"
             ]
         )
 
@@ -1028,14 +1030,11 @@ def render_admin():
             col1, col2 = st.columns(2)
 
             with col1:
-
                 cedula_emp = st.text_input("Cédula")
                 nombre_emp = st.text_input("Nombre")
 
             with col2:
-
                 cargo_emp = st.text_input("Cargo")
-
                 zona_emp = st.text_input(
                     "Zona",
                     value="Metropolitano"
@@ -1051,17 +1050,9 @@ def render_admin():
                 use_container_width=True
             ):
 
-                if (
-                    not cedula_emp
-                    or
-                    not nombre_emp
-                    or
-                    not cargo_emp
-                ):
+                if not cedula_emp or not nombre_emp or not cargo_emp:
 
-                    st.warning(
-                        "⚠️ Campos obligatorios"
-                    )
+                    st.warning("⚠️ Campos obligatorios")
 
                 else:
 
@@ -1097,15 +1088,11 @@ def render_admin():
                                 }
                             )
 
-                        st.success(
-                            "✅ Empleado guardado"
-                        )
+                        st.success("✅ Empleado guardado")
 
                     except Exception as e:
 
-                        st.error(
-                            f"❌ Error: {e}"
-                        )
+                        st.error(f"❌ Error: {e}")
 
         # =====================================================
         # CONSULTAR
@@ -1114,7 +1101,8 @@ def render_admin():
         with subtab_consultar:
 
             buscar = st.text_input(
-                "Buscar empleado"
+                "Buscar empleado",
+                key="buscar_empleado_consulta"
             )
 
             with engine.begin() as conn:
@@ -1149,6 +1137,154 @@ def render_admin():
                 use_container_width=True
             )
 
+        # =====================================================
+        # ACTIVAR / INACTIVAR
+        # =====================================================
+
+        with subtab_estado:
+
+            st.markdown("### ⚙️ Activar / Inactivar Empleado")
+
+            buscar_estado = st.text_input(
+                "Buscar por cédula o nombre",
+                key="buscar_empleado_estado"
+            )
+
+            with engine.begin() as conn:
+
+                df_estado = pd.read_sql(
+                    text("""
+                        SELECT
+                            cedula,
+                            nombre_completo,
+                            cargo,
+                            proyecto,
+                            zona,
+                            estado
+                        FROM empleados
+                        WHERE
+                            :buscar = ''
+                            OR cedula ILIKE :patron
+                            OR nombre_completo ILIKE :patron
+                        ORDER BY nombre_completo
+                    """),
+                    conn,
+                    params={
+                        "buscar": buscar_estado.strip(),
+                        "patron": f"%{buscar_estado.strip()}%"
+                    }
+                )
+
+            if df_estado.empty:
+
+                st.warning("⚠️ No se encontraron empleados.")
+
+            else:
+
+                st.dataframe(
+                    df_estado,
+                    use_container_width=True
+                )
+
+                opciones_empleados = {
+                    f"{row.cedula} - {row.nombre_completo}": row.cedula
+                    for row in df_estado.itertuples()
+                }
+
+                seleccion_empleado = st.selectbox(
+                    "Seleccione empleado",
+                    list(opciones_empleados.keys()),
+                    key="select_estado_empleado"
+                )
+
+                cedula_seleccionada = opciones_empleados[
+                    seleccion_empleado
+                ]
+
+                empleado_estado = df_estado[
+                    df_estado["cedula"] == cedula_seleccionada
+                ].iloc[0]
+
+                st.markdown("---")
+
+                col1, col2 = st.columns(2)
+
+                with col1:
+
+                    st.write(
+                        f"**Nombre:** {empleado_estado['nombre_completo']}"
+                    )
+
+                    st.write(
+                        f"**Cédula:** {empleado_estado['cedula']}"
+                    )
+
+                    st.write(
+                        f"**Cargo:** {empleado_estado['cargo']}"
+                    )
+
+                with col2:
+
+                    st.write(
+                        f"**Proyecto:** {empleado_estado['proyecto']}"
+                    )
+
+                    st.write(
+                        f"**Zona:** {empleado_estado['zona']}"
+                    )
+
+                    st.write(
+                        f"**Estado actual:** {empleado_estado['estado']}"
+                    )
+
+                estado_nuevo = st.radio(
+                    "Nuevo estado del empleado",
+                    [
+                        "ACTIVO",
+                        "INACTIVO"
+                    ],
+                    horizontal=True,
+                    index=0 if empleado_estado["estado"] == "ACTIVO" else 1,
+                    key=f"estado_nuevo_{cedula_seleccionada}"
+                )
+
+                if st.button(
+                    "💾 Guardar estado",
+                    use_container_width=True,
+                    key="guardar_estado_empleado"
+                ):
+
+                    try:
+
+                        with engine.begin() as conn:
+
+                            conn.execute(
+                                text("""
+                                    UPDATE empleados
+                                    SET estado = :estado
+                                    WHERE cedula = :cedula
+                                """),
+                                {
+                                    "estado": estado_nuevo,
+                                    "cedula": cedula_seleccionada
+                                }
+                            )
+
+                        st.success(
+                            f"✅ Empleado actualizado a estado {estado_nuevo}."
+                        )
+
+                        st.info(
+                            "Si queda INACTIVO, no podrá registrar nuevas asistencias."
+                        )
+
+                        st.rerun()
+
+                    except Exception as e:
+
+                        st.error(
+                            f"❌ Error actualizando estado: {e}"
+                        )
     # =========================================================
     # TAB ASISTENCIAS
     # =========================================================
