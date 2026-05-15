@@ -1270,10 +1270,17 @@ def render_admin():
                                 }
                             )
 
-                        st.success(
-                            f"✅ Empleado actualizado a estado {estado_nuevo}."
-                        )
+                        if estado_nuevo == "ACTIVO":
 
+                            st.success(
+                                "✅ El empleado se ha activado correctamente."
+                            )
+
+                        else:
+
+                            st.warning(
+                                "⚠️ El empleado se ha inactivado correctamente. Ya no podrá registrar asistencias."
+                            )
                         st.info(
                             "Si queda INACTIVO, no podrá registrar nuevas asistencias."
                         )
